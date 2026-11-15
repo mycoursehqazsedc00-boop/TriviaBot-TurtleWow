@@ -1,0 +1,14 @@
+## Interface: 11200
+## Title: TriviaBot-TurtleWoW
+## Version: 1.1
+## Notes: In-game trivia bot with Turtle WoW, Warcraft I-III, and WoW Lore questions, multiple-choice (A/B/C/D), fuzzy answer matching, and a moveable toggle button.
+## Author: LizardBerry
+## X-Credits: Roadblock (Nostalrius), Guri (Trollbane), Psy (Frostwolf)
+## SavedVariables: TRIVIA_QLIST, TRIVIA_CHANNEL, TRIVIA_CONFIG
+
+NormalQuestions.lua
+WoWQuestions.lua
+TurtleQuestions.lua
+GeographyQuestions.lua
+TriviaBot-TurtleWow.lua
+TriviaBot-TurtleWow.xml
