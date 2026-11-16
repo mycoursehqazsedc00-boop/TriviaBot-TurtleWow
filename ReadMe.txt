@@ -1,6 +1,6 @@
 TriviaBot-TurtleWoW v1.2
 
-TriviaBot-TurtleWoW is an interactive trivia bot for WoW 1.12 and Turtle WoW, featuring a graphical Settings Menu, configurable question timers, A/B/C/D multiple-choice options, flexible ("likely") answer matching, a moveable on-screen toggle button with live countdown, and 4,010 pre-TBC questions across Turtle WoW, Warcraft I/II/III, WoW Lore Publications, Geography, and General Knowledge Trivia.
+TriviaBot-TurtleWoW is an interactive trivia bot for WoW 1.12 and Turtle WoW, featuring a graphical Settings Menu, configurable question timers, A/B/C/D multiple-choice options, flexible ("likely") answer matching, a moveable on-screen toggle button with live countdown, and 4,120 pre-TBC questions across Turtle WoW, Warcraft I/II/III, WoW Lore Publications, Geography, and General Knowledge Trivia.
 
 Command List:
 /trivia | /trivia menu        - Opens the graphical Settings Menu.
@@ -21,9 +21,9 @@ Command List:
 /trivia score                 - Reports the current top scorers.
 /trivia help                  - In-game help display.
 
-Included Questions (4,010 total):
-- Warcraft Combined (1,060 questions: Turtle WoW + <=2006 WoW & Warcraft I/II/III/Lore)
-- Turtle WoW (100 questions)
-- WoW & Warcraft I/II/III/Lore <=2006 (960 questions)
+Included Questions (4,120 total):
+- Warcraft Combined (1,170 questions: Turtle WoW + <=2006 WoW & Warcraft I/II/III/Lore)
+- Turtle WoW (170 questions)
+- WoW & Warcraft I/II/III/Lore <=2006 (1,000 questions)
 - Geography (200 questions)
 - General Knowledge & Normal Trivia (2,750 questions)

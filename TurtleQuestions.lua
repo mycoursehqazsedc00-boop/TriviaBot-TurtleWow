@@ -1,4 +1,4 @@
-TURTLE_TRIVIA_QUESTIONS = {};
+﻿TURTLE_TRIVIA_QUESTIONS = {};
 TURTLE_TRIVIA_ANSWERS1 = {};
 TURTLE_TRIVIA_ANSWERS2 = {};
 TURTLE_TRIVIA_ANSWERS3 = {};
@@ -513,7 +513,7 @@ TURTLE_TRIVIA_QUESTIONS[93] = "Which Goblin racial ability in Turtle WoW grants 
 TURTLE_TRIVIA_ANSWERS1[93] = "Exit Strategy";
 TURTLE_TRIVIA_CHOICES[93] = {"Exit Strategy", "Escape Artist", "Will of the Forsaken", "War Stomp"};
 
-TURTLE_TRIVIA_QUESTIONS[94] = "Which twoweapon skills do Goblins gain a passive racial bonus to in Turtle WoW?";
+TURTLE_TRIVIA_QUESTIONS[94] = "Which two weapon skills do Goblins gain a passive racial bonus to in Turtle WoW?";
 TURTLE_TRIVIA_ANSWERS1[94] = "Daggers and Maces";
 TURTLE_TRIVIA_ANSWERS2[94] = "Maces and Daggers";
 TURTLE_TRIVIA_ANSWERS3[94] = "Daggers";
@@ -552,3 +552,348 @@ TURTLE_TRIVIA_QUESTIONS[100] = "What is the maximum character level in Turtle Wo
 TURTLE_TRIVIA_ANSWERS1[100] = "60";
 TURTLE_TRIVIA_ANSWERS2[100] = "sixty";
 TURTLE_TRIVIA_CHOICES[100] = {"60", "50", "55", "40"};
+
+-- ============================================================================
+-- Expanded Turtle WoW Content: Realms, Patches 1.16-1.18, Dungeons, Raids & Mechanics (101..160)
+-- ============================================================================
+
+TURTLE_TRIVIA_QUESTIONS[101] = "What was the name of Turtle WoW's original flagship PvE realm?";
+TURTLE_TRIVIA_ANSWERS1[101] = "Nordanaar";
+TURTLE_TRIVIA_CHOICES[101] = {"Nordanaar", "Tel'Abim", "Ambershire", "Alah'Thalas"};
+
+TURTLE_TRIVIA_QUESTIONS[102] = "What was the name of Turtle WoW's dedicated PvP realm launched with progressive content?";
+TURTLE_TRIVIA_ANSWERS1[102] = "Tel'Abim";
+TURTLE_TRIVIA_ANSWERS2[102] = "Telabim";
+TURTLE_TRIVIA_CHOICES[102] = {"Tel'Abim", "Nordanaar", "Ambershire", "Gilneas"};
+
+TURTLE_TRIVIA_QUESTIONS[103] = "What was the name of Turtle WoW's newer progressive fresh realm?";
+TURTLE_TRIVIA_ANSWERS1[103] = "Ambershire";
+TURTLE_TRIVIA_CHOICES[103] = {"Ambershire", "Nordanaar", "Tel'Abim", "Glenshire"};
+
+TURTLE_TRIVIA_QUESTIONS[104] = "What is the official title of Turtle WoW's ongoing horizontal Classic+ expansion?";
+TURTLE_TRIVIA_ANSWERS1[104] = "Mysteries of Azeroth";
+TURTLE_TRIVIA_CHOICES[104] = {"Mysteries of Azeroth", "Scars of the Past", "Shadows of Karazhan", "Echoes of Hyjal"};
+
+TURTLE_TRIVIA_QUESTIONS[105] = "What is the subtitle of Turtle WoW Patch 1.18, which introduced Northwind, Grim Reaches, and Balor?";
+TURTLE_TRIVIA_ANSWERS1[105] = "Scars of the Past";
+TURTLE_TRIVIA_CHOICES[105] = {"Scars of the Past", "Mysteries of Azeroth", "The Black Morass", "Tower of Karazhan"};
+
+TURTLE_TRIVIA_QUESTIONS[106] = "In which patch was the 40-player Tower of Karazhan (Upper Karazhan Halls) raid added to Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[106] = "1.17.2";
+TURTLE_TRIVIA_ANSWERS2[106] = "Patch 1.17.2";
+TURTLE_TRIVIA_CHOICES[106] = {"1.17.2", "1.16.0", "1.16.4", "1.18.0"};
+
+TURTLE_TRIVIA_QUESTIONS[107] = "In which patch were the Caverns of Time (The Black Morass) and Wardens of Time added to Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[107] = "1.16.0";
+TURTLE_TRIVIA_ANSWERS2[107] = "Patch 1.16.0";
+TURTLE_TRIVIA_CHOICES[107] = {"1.16.0", "1.16.4", "1.17.2", "1.18.0"};
+
+TURTLE_TRIVIA_QUESTIONS[108] = "What low-level (13-16) custom dungeon is hidden near the Ironforge Airfields in Dun Morogh in Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[108] = "Frostmane Hollow";
+TURTLE_TRIVIA_CHOICES[108] = {"Frostmane Hollow", "Windhorn Canyon", "Gnomeregan", "The Deadmines"};
+
+TURTLE_TRIVIA_QUESTIONS[109] = "Who is the frost elemental final boss of the Frostmane Hollow dungeon in Dun Morogh?";
+TURTLE_TRIVIA_ANSWERS1[109] = "Hailar the Frigid";
+TURTLE_TRIVIA_ANSWERS2[109] = "Hailar";
+TURTLE_TRIVIA_CHOICES[109] = {"Hailar the Frigid", "Chieftain Shalk Blackwind", "Duke Balor the IV", "Vangros"};
+
+TURTLE_TRIVIA_QUESTIONS[110] = "Which troll shaman boss is fought inside Frostmane Hollow before Hailar the Frigid?";
+TURTLE_TRIVIA_ANSWERS1[110] = "Kan'za the Seer";
+TURTLE_TRIVIA_ANSWERS2[110] = "Kan'za";
+TURTLE_TRIVIA_CHOICES[110] = {"Kan'za the Seer", "Gahz'ranka", "Hexxer Jindo", "Witch Doctor Zum'rah"};
+
+TURTLE_TRIVIA_QUESTIONS[111] = "What level 26-30 custom outdoor-style dungeon in Thousand Needles centers around Tauren lore in Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[111] = "Windhorn Canyon";
+TURTLE_TRIVIA_CHOICES[111] = {"Windhorn Canyon", "Frostmane Hollow", "The Crescent Grove", "Dragonmaw Retreat"};
+
+TURTLE_TRIVIA_QUESTIONS[112] = "Who is the final Tauren chieftain boss of the Windhorn Canyon dungeon?";
+TURTLE_TRIVIA_ANSWERS1[112] = "Chieftain Shalk Blackwind";
+TURTLE_TRIVIA_ANSWERS2[112] = "Shalk Blackwind";
+TURTLE_TRIVIA_CHOICES[112] = {"Chieftain Shalk Blackwind", "Cairne Bloodhoof", "Prophet Stormhoof", "Magatha Grimtotem"};
+
+TURTLE_TRIVIA_QUESTIONS[113] = "What level range is the custom Dragonmaw Retreat dungeon in the Wetlands built for in Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[113] = "25-34";
+TURTLE_TRIVIA_ANSWERS2[113] = "30-35";
+TURTLE_TRIVIA_CHOICES[113] = {"25-34", "13-16", "52-60", "58-60"};
+
+TURTLE_TRIVIA_QUESTIONS[114] = "Into which two wings or sections is the massive 12-boss Stormwrought Ruins dungeon on Balor split?";
+TURTLE_TRIVIA_ANSWERS1[114] = "Stormwrought Castle and Stormwrought Descent";
+TURTLE_TRIVIA_ANSWERS2[114] = "Stormwrought Castle";
+TURTLE_TRIVIA_ANSWERS3[114] = "Stormwrought Descent";
+TURTLE_TRIVIA_CHOICES[114] = {"Stormwrought Castle and Stormwrought Descent", "Upper and Lower Vaults", "East and West Wings", "North and South Bastions"};
+
+TURTLE_TRIVIA_QUESTIONS[115] = "Who is the final boss of Stormwrought Ruins on the island of Balor in Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[115] = "Mergothid";
+TURTLE_TRIVIA_ANSWERS2[115] = "Ighal'for";
+TURTLE_TRIVIA_CHOICES[115] = {"Mergothid", "Duke Balor the IV", "Highlord Kruul", "Mephistroth"};
+
+TURTLE_TRIVIA_QUESTIONS[116] = "Which former human noble ruler of Balor is a boss inside Stormwrought Ruins?";
+TURTLE_TRIVIA_ANSWERS1[116] = "Duke Balor the IV";
+TURTLE_TRIVIA_ANSWERS2[116] = "Duke Balor";
+TURTLE_TRIVIA_CHOICES[116] = {"Duke Balor the IV", "Lord Amberwood", "Lord Blackwald II", "Baron Silverlaine"};
+
+TURTLE_TRIVIA_QUESTIONS[117] = "Which custom Turtle WoW boss oversees a Zanzil's Mixture laboratory in an expanded wing of The Deadmines?";
+TURTLE_TRIVIA_ANSWERS1[117] = "Jared Voss";
+TURTLE_TRIVIA_ANSWERS2[117] = "Voss";
+TURTLE_TRIVIA_CHOICES[117] = {"Jared Voss", "Edwin VanCleef", "Rhahk'Zor", "Gilnid"};
+
+TURTLE_TRIVIA_QUESTIONS[118] = "What custom mechanical golem boss is fought in the Goblin Foundry wing of Turtle WoW's expanded Deadmines?";
+TURTLE_TRIVIA_ANSWERS1[118] = "Masterpiece Harvester";
+TURTLE_TRIVIA_CHOICES[118] = {"Masterpiece Harvester", "Sneed's Shredder", "Crowd Pummeler 9-60", "Foe Reaper 4000"};
+
+TURTLE_TRIVIA_QUESTIONS[119] = "Which new sub-cave wing was added to Wailing Caverns in Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[119] = "The Overgrowth";
+TURTLE_TRIVIA_ANSWERS2[119] = "Overgrowth";
+TURTLE_TRIVIA_CHOICES[119] = {"The Overgrowth", "The Brambled Grotto", "Crimson Cavern", "Emerald Hollow"};
+
+TURTLE_TRIVIA_QUESTIONS[120] = "What apex predator boss lurks inside The Overgrowth wing of Turtle WoW's expanded Wailing Caverns?";
+TURTLE_TRIVIA_ANSWERS1[120] = "Vangros";
+TURTLE_TRIVIA_CHOICES[120] = {"Vangros", "Mutanus the Devourer", "Skum", "Kresh"};
+
+TURTLE_TRIVIA_QUESTIONS[121] = "Which custom sub-area was added to Razorfen Kraul in Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[121] = "The Brambled Grotto";
+TURTLE_TRIVIA_ANSWERS2[121] = "Brambled Grotto";
+TURTLE_TRIVIA_CHOICES[121] = {"The Brambled Grotto", "The Overgrowth", "Temple of Agamaggan", "Plaguewood"};
+
+TURTLE_TRIVIA_QUESTIONS[122] = "How many bosses (including mini-bosses like Warden Liferoot) are inside The Crescent Grove in Ashenvale?";
+TURTLE_TRIVIA_ANSWERS1[122] = "7";
+TURTLE_TRIVIA_ANSWERS2[122] = "Seven";
+TURTLE_TRIVIA_CHOICES[122] = {"7", "4", "10", "12"};
+
+TURTLE_TRIVIA_QUESTIONS[123] = "Which boss in Lower Karazhan Halls is fought alongside Lord Blackwald II, Clawlord Howlfang, and Brood Queen Araxxna?";
+TURTLE_TRIVIA_ANSWERS1[123] = "Grizikil";
+TURTLE_TRIVIA_CHOICES[123] = {"Grizikil", "Anomalus", "Keeper Gnarlmoon", "Mephistroth"};
+
+TURTLE_TRIVIA_QUESTIONS[124] = "Who is the sixth boss of the Tower of Karazhan raid, a draenei riftwalker found at the Temple of Aka'Sha?";
+TURTLE_TRIVIA_ANSWERS1[124] = "Sanv Tas'dal";
+TURTLE_TRIVIA_CHOICES[124] = {"Sanv Tas'dal", "Kruul", "Rupturan the Broken", "Echo of Medivh"};
+
+TURTLE_TRIVIA_QUESTIONS[125] = "In which hall of the Tower of Karazhan raid does the fifth boss encounter, The Chess Event, take place?";
+TURTLE_TRIVIA_ANSWERS1[125] = "Gamesman's Hall";
+TURTLE_TRIVIA_ANSWERS2[125] = "The Gamesman's Hall";
+TURTLE_TRIVIA_CHOICES[125] = {"Gamesman's Hall", "Temple of Aka'Sha", "Seat of Desolation", "The Library"};
+
+TURTLE_TRIVIA_QUESTIONS[126] = "Which rare mount can drop from The Chess Event inside Turtle WoW's Tower of Karazhan raid?";
+TURTLE_TRIVIA_ANSWERS1[126] = "Mechanical Horse";
+TURTLE_TRIVIA_CHOICES[126] = {"Mechanical Horse", "Felforged Dreadhound", "Spectral Tiger", "Swift Unicorn"};
+
+TURTLE_TRIVIA_QUESTIONS[127] = "Which ring or fist weapon drops from The Chess Event in Tower of Karazhan? (Name one)";
+TURTLE_TRIVIA_ANSWERS1[127] = "Royal Seal of Greymane";
+TURTLE_TRIVIA_ANSWERS2[127] = "Checkmate";
+TURTLE_TRIVIA_ANSWERS3[127] = "King's Edict";
+TURTLE_TRIVIA_CHOICES[127] = {"Royal Seal of Greymane", "Heart of Mephistroth", "Voidclaw Choker", "Khadgar's Guidance"};
+
+TURTLE_TRIVIA_QUESTIONS[128] = "Which mount can drop from Mephistroth, the final boss of the Tower of Karazhan raid?";
+TURTLE_TRIVIA_ANSWERS1[128] = "Felforged Dreadhound";
+TURTLE_TRIVIA_CHOICES[128] = {"Felforged Dreadhound", "Mechanical Horse", "Deathcharger's Reins", "Swift White Mechanostrider"};
+
+TURTLE_TRIVIA_QUESTIONS[129] = "Which high-tier item drops from Mephistroth at the Seat of Desolation? (Name one)";
+TURTLE_TRIVIA_ANSWERS1[129] = "Heart of Mephistroth";
+TURTLE_TRIVIA_ANSWERS2[129] = "Memory of the Last Guardian";
+TURTLE_TRIVIA_ANSWERS3[129] = "Khadgar's Guidance";
+TURTLE_TRIVIA_ANSWERS4[129] = "Turalyon's Hope";
+TURTLE_TRIVIA_CHOICES[129] = {"Memory of the Last Guardian", "Band of Ancient Lethality", "Checkmate", "Sword of a Thousand Truths"};
+
+TURTLE_TRIVIA_QUESTIONS[130] = "What is the name of the attunement quest chain required to enter the Emerald Sanctum raid in Mount Hyjal?";
+TURTLE_TRIVIA_ANSWERS1[130] = "Into the Dream";
+TURTLE_TRIVIA_CHOICES[130] = {"Into the Dream", "Seal of Ascension", "Drakefire Amulet", "Attunement to the Core"};
+
+TURTLE_TRIVIA_QUESTIONS[131] = "What attunement key item is awarded at the end of 'Into the Dream' to enter the Emerald Sanctum portal?";
+TURTLE_TRIVIA_ANSWERS1[131] = "Gemstone of Ysera";
+TURTLE_TRIVIA_CHOICES[131] = {"Gemstone of Ysera", "Drakefire Amulet", "Onyxia Key", "Scepter of Celebras"};
+
+TURTLE_TRIVIA_QUESTIONS[132] = "Who starts the 'Into the Dream' attunement quest chain in Nordanaar, Mount Hyjal?";
+TURTLE_TRIVIA_ANSWERS1[132] = "Ralathius";
+TURTLE_TRIVIA_CHOICES[132] = {"Ralathius", "Itharius", "Remulos", "Larannikus"};
+
+TURTLE_TRIVIA_QUESTIONS[133] = "Which green dragon in the Swamp of Sorrows must players visit during 'Into the Dream III'?";
+TURTLE_TRIVIA_ANSWERS1[133] = "Itharius";
+TURTLE_TRIVIA_CHOICES[133] = {"Itharius", "Eranikus", "Ysondre", "Solnius"};
+
+TURTLE_TRIVIA_QUESTIONS[134] = "From which elite drake in Mount Hyjal do players loot the 'Charge of Ysera' to finish Emerald Sanctum attunement?";
+TURTLE_TRIVIA_ANSWERS1[134] = "Larannikus";
+TURTLE_TRIVIA_CHOICES[134] = {"Larannikus", "Erennius", "Solnius", "Emeriss"};
+
+TURTLE_TRIVIA_QUESTIONS[135] = "What does the name of the High Elf capital city 'Alah'Thalas' translate to in Turtle WoW lore?";
+TURTLE_TRIVIA_ANSWERS1[135] = "Land of Light";
+TURTLE_TRIVIA_CHOICES[135] = {"Land of Light", "Silver Haven", "Sun's Refuge", "Highborne Sanctuary"};
+
+TURTLE_TRIVIA_QUESTIONS[136] = "Which custom high-level zone located north of Azshara features moonlit Kaldorei and haunted Highborne ruins?";
+TURTLE_TRIVIA_ANSWERS1[136] = "Moonwhisper Coast";
+TURTLE_TRIVIA_CHOICES[136] = {"Moonwhisper Coast", "Tel'Abim", "Thalassian Highlands", "Nordanaar"};
+
+TURTLE_TRIVIA_QUESTIONS[137] = "In the custom Northwind zone north of Stormwind, which human noble faces internal struggles and monster incursions?";
+TURTLE_TRIVIA_ANSWERS1[137] = "Lord Amberwood";
+TURTLE_TRIVIA_ANSWERS2[137] = "Amberwood";
+TURTLE_TRIVIA_CHOICES[137] = {"Lord Amberwood", "Duke Balor", "Marshal Windsor", "Lord Falconcrest"};
+
+TURTLE_TRIVIA_QUESTIONS[138] = "What is the name of the corrupted southern swamp inside the custom Grim Reaches zone?";
+TURTLE_TRIVIA_ANSWERS1[138] = "The Grim Hollows";
+TURTLE_TRIVIA_ANSWERS2[138] = "Grim Hollows";
+TURTLE_TRIVIA_CHOICES[138] = {"The Grim Hollows", "Shadowbreak Ravine", "Bogpaddle", "Plaguewood"};
+
+TURTLE_TRIVIA_QUESTIONS[139] = "Which two factions clash across the cliffs of the Grim Reaches zone in Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[139] = "Wildhammer Dwarves and Dragonmaw Orcs";
+TURTLE_TRIVIA_ANSWERS2[139] = "Wildhammer Dwarves";
+TURTLE_TRIVIA_ANSWERS3[139] = "Dragonmaw Orcs";
+TURTLE_TRIVIA_CHOICES[139] = {"Wildhammer Dwarves and Dragonmaw Orcs", "Bronzebeard Dwarves and Dark Iron", "High Elves and Forest Trolls", "Frostwolf Orcs and Stormpike"};
+
+TURTLE_TRIVIA_QUESTIONS[140] = "In Turtle WoW Patch 1.18, which custom endgame questline expands the furbolg tunnel between Felwood and Moonglade?";
+TURTLE_TRIVIA_ANSWERS1[140] = "The Corruption of Timbermaw Hold";
+TURTLE_TRIVIA_ANSWERS2[140] = "Corruption of Timbermaw Hold";
+TURTLE_TRIVIA_CHOICES[140] = {"The Corruption of Timbermaw Hold", "Into the Dream", "Call of the Highborne", "Fall of Grim Batol"};
+
+TURTLE_TRIVIA_QUESTIONS[141] = "Which custom epic rings and necklace drop from the Desolace Voidwalker world boss Concavius? (Name one)";
+TURTLE_TRIVIA_ANSWERS1[141] = "Voidclaw Choker";
+TURTLE_TRIVIA_ANSWERS2[141] = "Charm of Dark Domination";
+TURTLE_TRIVIA_ANSWERS3[141] = "Band of Ancient Lethality";
+TURTLE_TRIVIA_ANSWERS4[141] = "Ring of the Abyss Watcher";
+TURTLE_TRIVIA_CHOICES[141] = {"Voidclaw Choker", "Heart of Mephistroth", "Royal Seal of Greymane", "Khadgar's Guidance"};
+
+TURTLE_TRIVIA_QUESTIONS[142] = "What custom guardian creatures and new brood commander encounter were added to Turtle WoW's updated Onyxia's Lair? (Name one)";
+TURTLE_TRIVIA_ANSWERS1[142] = "Onyxian Flamespawn";
+TURTLE_TRIVIA_ANSWERS2[142] = "Onyxian Inciter";
+TURTLE_TRIVIA_CHOICES[142] = {"Onyxian Flamespawn", "Core Hound", "Chromaggus", "Drakonid Guard"};
+
+TURTLE_TRIVIA_QUESTIONS[143] = "Who is the Revantusk troll leader who directs Horde quests at Revantusk Village in the Hinterlands?";
+TURTLE_TRIVIA_ANSWERS1[143] = "Primal Torntusk";
+TURTLE_TRIVIA_ANSWERS2[143] = "Torntusk";
+TURTLE_TRIVIA_CHOICES[143] = {"Primal Torntusk", "Zul'jin", "Vol'jin", "Sen'jin"};
+
+TURTLE_TRIVIA_QUESTIONS[144] = "Which Turtle WoW challenge forbids equipping any armor or weapons except items crafted by yourself (or your fellowship)?";
+TURTLE_TRIVIA_ANSWERS1[144] = "Craftsman's Challenge";
+TURTLE_TRIVIA_ANSWERS2[144] = "Traveling Craftsman";
+TURTLE_TRIVIA_CHOICES[144] = {"Craftsman's Challenge", "Vagrant's Endeavor", "Slow and Steady", "Exhaustion"};
+
+TURTLE_TRIVIA_QUESTIONS[145] = "What exclusive character title is rewarded upon completing milestones in the Craftsman's Challenge?";
+TURTLE_TRIVIA_ANSWERS1[145] = "Craftmaster";
+TURTLE_TRIVIA_CHOICES[145] = {"Craftmaster", "Immortal", "Artisan", "Grand Tinker"};
+
+TURTLE_TRIVIA_QUESTIONS[146] = "Which Turtle WoW leveling challenge disables all Rested XP in exchange for doubling your weapon skill gains?";
+TURTLE_TRIVIA_ANSWERS1[146] = "Exhaustion";
+TURTLE_TRIVIA_CHOICES[146] = {"Exhaustion", "Slow and Steady", "War Mode", "Craftsman's Challenge"};
+
+TURTLE_TRIVIA_QUESTIONS[147] = "What is the name of the custom level 60 quest that unlocks the Gardening hobby skill in Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[147] = "You Reap What You Sow";
+TURTLE_TRIVIA_CHOICES[147] = {"You Reap What You Sow", "Nuts for Nuts", "Into the Dream", "Boats for Dummies"};
+
+TURTLE_TRIVIA_QUESTIONS[148] = "Which Alliance or Horde NPC gives the Gardening unlock quest 'You Reap What You Sow'? (Name one)";
+TURTLE_TRIVIA_ANSWERS1[148] = "Mortimer Stansfield";
+TURTLE_TRIVIA_ANSWERS2[148] = "Kern Mosshoof";
+TURTLE_TRIVIA_CHOICES[148] = {"Mortimer Stansfield", "Rufus Hardwick", "Silas Darkmoon", "Hemet Nesingwary"};
+
+TURTLE_TRIVIA_QUESTIONS[149] = "Which starter tool given when beginning Gardening in Turtle WoW also doubles as a surprisingly strong low-level one-handed mace?";
+TURTLE_TRIVIA_ANSWERS1[149] = "Garden Shovel";
+TURTLE_TRIVIA_CHOICES[149] = {"Garden Shovel", "Woodcutting Axe", "Planter Box", "Mining Pick"};
+
+TURTLE_TRIVIA_QUESTIONS[150] = "What custom wood resource do players chop with a Woodcutting Axe for the Survival secondary skill?";
+TURTLE_TRIVIA_ANSWERS1[150] = "Simple Wood";
+TURTLE_TRIVIA_CHOICES[150] = {"Simple Wood", "Heavy Timber", "Ancient Bark", "Ashenvale Logs"};
+
+TURTLE_TRIVIA_QUESTIONS[151] = "Which Paladin ability or seal was added/reworked in Turtle WoW to give Protection Paladins strong threat generation? (Name one)";
+TURTLE_TRIVIA_ANSWERS1[151] = "Seal of Fury";
+TURTLE_TRIVIA_ANSWERS2[151] = "Holy Strike";
+TURTLE_TRIVIA_ANSWERS3[151] = "Light's Vigil";
+TURTLE_TRIVIA_CHOICES[151] = {"Seal of Fury", "Righteous Defense", "Avenger's Shield", "Holy Shield"};
+
+TURTLE_TRIVIA_QUESTIONS[152] = "Which level 60 Warlock grimoire spell (30-minute cooldown) opens a portal into the Twisting Nether in Turtle WoW?";
+TURTLE_TRIVIA_ANSWERS1[152] = "Demon Portal";
+TURTLE_TRIVIA_CHOICES[152] = {"Demon Portal", "Ritual of Doom", "Summon Infernal", "Eye of Kilrogg"};
+
+TURTLE_TRIVIA_QUESTIONS[153] = "To which row of the Arms talent tree was 'Tactical Mastery' moved in Turtle WoW to make stance-dancing easier?";
+TURTLE_TRIVIA_ANSWERS1[153] = "First row";
+TURTLE_TRIVIA_ANSWERS2[153] = "Row 1";
+TURTLE_TRIVIA_ANSWERS3[153] = "1st row";
+TURTLE_TRIVIA_ANSWERS4[153] = "1";
+TURTLE_TRIVIA_CHOICES[153] = {"First row", "Fifth row", "Third row", "Seventh row"};
+
+TURTLE_TRIVIA_QUESTIONS[154] = "What is the name of the refugee camp established just south of the Greymane Wall in Gilneas by survivors from Silverpine Forest?";
+TURTLE_TRIVIA_ANSWERS1[154] = "Vagrant Encampment";
+TURTLE_TRIVIA_ANSWERS2[154] = "The Vagrant Encampment";
+TURTLE_TRIVIA_CHOICES[154] = {"Vagrant Encampment", "Ravenshire", "Glenshire", "Pyrewood Village"};
+
+TURTLE_TRIVIA_QUESTIONS[155] = "Which two notable NPCs lead and cook at the Vagrant Encampment in Gilneas? (Name one)";
+TURTLE_TRIVIA_ANSWERS1[155] = "Camp Leader Gethenor";
+TURTLE_TRIVIA_ANSWERS2[155] = "Gethenor";
+TURTLE_TRIVIA_ANSWERS3[155] = "Camp Chef Velden";
+TURTLE_TRIVIA_ANSWERS4[155] = "Velden";
+TURTLE_TRIVIA_CHOICES[155] = {"Camp Leader Gethenor", "Lord Amberwood", "Marshal Windsor", "Primal Torntusk"};
+
+TURTLE_TRIVIA_QUESTIONS[156] = "Which custom winery landmark can players visit inside the custom Northwind zone north of Stormwind?";
+TURTLE_TRIVIA_ANSWERS1[156] = "Crawford Winery";
+TURTLE_TRIVIA_ANSWERS2[156] = "Crawford";
+TURTLE_TRIVIA_CHOICES[156] = {"Crawford Winery", "Northshire Vineyard", "Maclure Vineyards", "Stonefield Farm"};
+
+TURTLE_TRIVIA_QUESTIONS[157] = "Which gathering activity pairs with the Survival secondary profession using a Woodcutting Axe to harvest Simple Wood?";
+TURTLE_TRIVIA_ANSWERS1[157] = "Woodcutting";
+TURTLE_TRIVIA_CHOICES[157] = {"Woodcutting", "Logging", "Carpentry", "Foraging"};
+
+TURTLE_TRIVIA_QUESTIONS[158] = "Which custom armor progression tier was introduced with the Tower of Karazhan 40-player raid to build beyond Naxxramas Tier 3?";
+TURTLE_TRIVIA_ANSWERS1[158] = "Tier 3.5";
+TURTLE_TRIVIA_CHOICES[158] = {"Tier 3.5", "Tier 0.5", "Tier 1", "Tier 2"};
+
+TURTLE_TRIVIA_QUESTIONS[159] = "Which sub-area was added to Razorfen Downs in Turtle WoW's expanded classic dungeons?";
+TURTLE_TRIVIA_ANSWERS1[159] = "Temple of Agamaggan";
+TURTLE_TRIVIA_CHOICES[159] = {"Temple of Agamaggan", "The Brambled Grotto", "The Overgrowth", "The Grim Hollows"};
+
+TURTLE_TRIVIA_QUESTIONS[160] = "Which early Turtle WoW world boss in Feralas shared the Dragons of Nightmare loot table before being retired?";
+TURTLE_TRIVIA_ANSWERS1[160] = "Turtlhu";
+TURTLE_TRIVIA_ANSWERS2[160] = "Turtlhu, the Black Turtle of Doom";
+TURTLE_TRIVIA_CHOICES[160] = {"Turtlhu", "Concavius", "Ostarius of Uldum", "Dark Reaver of Karazhan"};
+
+TURTLE_TRIVIA_QUESTIONS[161] = "Which two new sub-areas were added to Stonetalon Mountains in Turtle WoW's expansions? (Name one)";
+TURTLE_TRIVIA_ANSWERS1[161] = "Bramblethorn Pass";
+TURTLE_TRIVIA_ANSWERS2[161] = "Bael Hardul";
+TURTLE_TRIVIA_CHOICES[161] = {"Bramblethorn Pass", "The Overgrowth", "Moonwhisper Coast", "Vagrant Encampment"};
+
+TURTLE_TRIVIA_QUESTIONS[162] = "What basic torch item can low-skill Survival crafters make alongside Bright Campfire?";
+TURTLE_TRIVIA_ANSWERS1[162] = "Dim Torch";
+TURTLE_TRIVIA_ANSWERS2[162] = "Simple Torch";
+TURTLE_TRIVIA_CHOICES[162] = {"Dim Torch", "Goblin Flare", "Signal Beacon", "Gnomish Lantern"};
+
+TURTLE_TRIVIA_QUESTIONS[163] = "Which two bosses guard the first encounter (elite troll & leopard duo) in Frostmane Hollow?";
+TURTLE_TRIVIA_ANSWERS1[163] = "Tan'sha the Sleek and Handler Oboka";
+TURTLE_TRIVIA_ANSWERS2[163] = "Tan'sha the Sleek";
+TURTLE_TRIVIA_ANSWERS3[163] = "Handler Oboka";
+TURTLE_TRIVIA_CHOICES[163] = {"Tan'sha the Sleek and Handler Oboka", "Battlemaster Ubukazl", "Kan'za the Seer", "Hailar the Frigid"};
+
+TURTLE_TRIVIA_QUESTIONS[164] = "Which elite troll warrior is the second boss encounter inside Frostmane Hollow?";
+TURTLE_TRIVIA_ANSWERS1[164] = "Battlemaster Ubukazl";
+TURTLE_TRIVIA_ANSWERS2[164] = "Ubukazl";
+TURTLE_TRIVIA_CHOICES[164] = {"Battlemaster Ubukazl", "Kan'za the Seer", "Hailar the Frigid", "Primal Torntusk"};
+
+TURTLE_TRIVIA_QUESTIONS[165] = "Which two custom Tauren-themed bosses are fought inside Windhorn Canyon in Thousand Needles? (Name one)";
+TURTLE_TRIVIA_ANSWERS1[165] = "Prophet Stormhoof";
+TURTLE_TRIVIA_ANSWERS2[165] = "Pathun Duskhide";
+TURTLE_TRIVIA_ANSWERS3[165] = "Walgan Bloodcaller";
+TURTLE_TRIVIA_ANSWERS4[165] = "Bonespeaker Narlgom";
+TURTLE_TRIVIA_CHOICES[165] = {"Prophet Stormhoof", "Cairne Bloodhoof", "Baine Bloodhoof", "Magatha Grimtotem"};
+
+TURTLE_TRIVIA_QUESTIONS[166] = "Which Stormwrought Ruins boss is a corrupted primordial sea creature fought on the island of Balor?";
+TURTLE_TRIVIA_ANSWERS1[166] = "Eldermaw the Primordial";
+TURTLE_TRIVIA_ANSWERS2[166] = "Eldermaw";
+TURTLE_TRIVIA_CHOICES[166] = {"Eldermaw the Primordial", "Vangros", "Turtlhu", "Ghamoo-ra"};
+
+TURTLE_TRIVIA_QUESTIONS[167] = "Which two items from Dire Maul West Giants and Sunken Temple are needed for 'Into the Dream III'? (Name one)";
+TURTLE_TRIVIA_ANSWERS1[167] = "Overloaded Arcane Prism";
+TURTLE_TRIVIA_ANSWERS2[167] = "Slumberer's Shard";
+TURTLE_TRIVIA_ANSWERS3[167] = "Binding Fragment";
+TURTLE_TRIVIA_CHOICES[167] = {"Overloaded Arcane Prism", "Eye of Sulfuras", "Crystal of Zin-Malor", "Scepter of Celebras"};
+
+TURTLE_TRIVIA_QUESTIONS[168] = "In Turtle WoW Patch 1.18.1, what percentage of a level was Tent rested experience accumulation capped at?";
+TURTLE_TRIVIA_ANSWERS1[168] = "25%";
+TURTLE_TRIVIA_ANSWERS2[168] = "25";
+TURTLE_TRIVIA_CHOICES[168] = {"25%", "50%", "100%", "150%"};
+
+TURTLE_TRIVIA_QUESTIONS[169] = "Which piece of mechanical chess moves and attacks in the Gamesman's Hall during Tower of Karazhan? (Name any Chess Boss piece)";
+TURTLE_TRIVIA_ANSWERS1[169] = "The King";
+TURTLE_TRIVIA_ANSWERS2[169] = "The Queen";
+TURTLE_TRIVIA_ANSWERS3[169] = "Rook";
+TURTLE_TRIVIA_ANSWERS4[169] = "Bishop";
+TURTLE_TRIVIA_ANSWERS5[169] = "Knight";
+TURTLE_TRIVIA_CHOICES[169] = {"The King", "Mechanical Horse", "Onyxian Inciter", "Sanv Tas'dal"};
+
+TURTLE_TRIVIA_QUESTIONS[170] = "Which Paladin talent in Turtle WoW supports alternating two active Seals ('Seal Twisting')?";
+TURTLE_TRIVIA_ANSWERS1[170] = "Twist of Light";
+TURTLE_TRIVIA_CHOICES[170] = {"Twist of Light", "Seal of Fury", "Holy Strike", "Crusader Strike"};
+

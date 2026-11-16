@@ -4661,3 +4661,195 @@ WOW_TRIVIA_QUESTIONS[960] = "(Vanilla 1.12): Who is the undead Dreadlord serving
 WOW_TRIVIA_ANSWERS1[960] = "Varimathras";
 WOW_TRIVIA_CHOICES[960] = {"Varimathras", "Balnazzar", "Detheroc", "Mal'Ganis"};
 
+
+-- ============================================================================
+-- Additional Vanilla 1.12 Raid, Dungeon & Class Trivia (961..1000)
+-- ============================================================================
+
+WOW_TRIVIA_QUESTIONS[961] = "(Vanilla 1.12): Which legendary sword requires both halves of the Bindings of the Windseeker and 10 Elementium Bars?";
+WOW_TRIVIA_ANSWERS1[961] = "Thunderfury, Blessed Blade of the Windseeker";
+WOW_TRIVIA_ANSWERS2[961] = "Thunderfury";
+WOW_TRIVIA_CHOICES[961] = {"Thunderfury, Blessed Blade of the Windseeker", "Sulfuras, Hand of Ragnaros", "Atiesh, Greatstaff of the Guardian", "Ashbringer"};
+
+WOW_TRIVIA_QUESTIONS[962] = "(Vanilla 1.12): Who is the Windseeker prince freed and defeated in Silithus during the quest to forge Thunderfury?";
+WOW_TRIVIA_ANSWERS1[962] = "Prince Thunderaan";
+WOW_TRIVIA_ANSWERS2[962] = "Thunderaan";
+WOW_TRIVIA_CHOICES[962] = {"Prince Thunderaan", "Al'Akir", "Ragnaros", "Neptulon"};
+
+WOW_TRIVIA_QUESTIONS[963] = "(Vanilla 1.12): Which goblin in Blackwing Lair teaches Miners the recipe to Smelt Elementium via Mind Control?";
+WOW_TRIVIA_ANSWERS1[963] = "Master Elemental Shaper Krixix";
+WOW_TRIVIA_ANSWERS2[963] = "Krixix";
+WOW_TRIVIA_CHOICES[963] = {"Master Elemental Shaper Krixix", "Chromaggus", "Lord Victor Nefarius", "Nokhor"};
+
+WOW_TRIVIA_QUESTIONS[964] = "(Vanilla 1.12): What is the Alliance's highest PvP Honor rank (Rank 14) title in Vanilla WoW?";
+WOW_TRIVIA_ANSWERS1[964] = "Grand Marshal";
+WOW_TRIVIA_CHOICES[964] = {"Grand Marshal", "Field Marshal", "Commander", "High Warlord"};
+
+WOW_TRIVIA_QUESTIONS[965] = "(Vanilla 1.12): What is the Horde's highest PvP Honor rank (Rank 14) title?";
+WOW_TRIVIA_ANSWERS1[965] = "High Warlord";
+WOW_TRIVIA_CHOICES[965] = {"High Warlord", "Warlord", "General", "Grand Marshal"};
+
+WOW_TRIVIA_QUESTIONS[966] = "(Vanilla 1.12): How many Honor ranks exist in the original Vanilla 1.12 PvP ranking system?";
+WOW_TRIVIA_ANSWERS1[966] = "14";
+WOW_TRIVIA_ANSWERS2[966] = "Fourteen";
+WOW_TRIVIA_CHOICES[966] = {"14", "10", "12", "15"};
+
+WOW_TRIVIA_QUESTIONS[967] = "(Vanilla 1.12): What is the name of the Alliance faction inside Alterac Valley?";
+WOW_TRIVIA_ANSWERS1[967] = "Stormpike Guard";
+WOW_TRIVIA_ANSWERS2[967] = "Stormpike";
+WOW_TRIVIA_CHOICES[967] = {"Stormpike Guard", "Silverwing Sentinels", "The League of Arathor", "Frostwolf Clan"};
+
+WOW_TRIVIA_QUESTIONS[968] = "(Vanilla 1.12): What is the name of the Horde faction inside Alterac Valley?";
+WOW_TRIVIA_ANSWERS1[968] = "Frostwolf Clan";
+WOW_TRIVIA_ANSWERS2[968] = "Frostwolf";
+WOW_TRIVIA_CHOICES[968] = {"Frostwolf Clan", "Warsong Outriders", "The Defilers", "Stormpike Guard"};
+
+WOW_TRIVIA_QUESTIONS[969] = "(Vanilla 1.12): What is the name of the Alliance faction inside Warsong Gulch?";
+WOW_TRIVIA_ANSWERS1[969] = "Silverwing Sentinels";
+WOW_TRIVIA_ANSWERS2[969] = "Silverwing";
+WOW_TRIVIA_CHOICES[969] = {"Silverwing Sentinels", "Stormpike Guard", "The League of Arathor", "Warsong Outriders"};
+
+WOW_TRIVIA_QUESTIONS[970] = "(Vanilla 1.12): What is the name of the Horde faction inside Arathi Basin?";
+WOW_TRIVIA_ANSWERS1[970] = "The Defilers";
+WOW_TRIVIA_ANSWERS2[970] = "Defilers";
+WOW_TRIVIA_CHOICES[970] = {"The Defilers", "The League of Arathor", "Warsong Outriders", "Frostwolf Clan"};
+
+WOW_TRIVIA_QUESTIONS[971] = "(Vanilla 1.12): What is the name of the Alliance faction inside Arathi Basin?";
+WOW_TRIVIA_ANSWERS1[971] = "The League of Arathor";
+WOW_TRIVIA_ANSWERS2[971] = "League of Arathor";
+WOW_TRIVIA_CHOICES[971] = {"The League of Arathor", "The Defilers", "Silverwing Sentinels", "Stormpike Guard"};
+
+WOW_TRIVIA_QUESTIONS[972] = "(Vanilla 1.12): Which 10-hour server-wide event culminated in ringing the Scarab Gong in Silithus to unlock Ahn'Qiraj?";
+WOW_TRIVIA_ANSWERS1[972] = "The Ahn'Qiraj War Effort";
+WOW_TRIVIA_ANSWERS2[972] = "AQ War Effort";
+WOW_TRIVIA_ANSWERS3[972] = "War of the Shifting Sands";
+WOW_TRIVIA_CHOICES[972] = {"The Ahn'Qiraj War Effort", "Scourge Invasion", "Elemental Invasion", "Opening of the Dark Portal"};
+
+WOW_TRIVIA_QUESTIONS[973] = "(Vanilla 1.12): What legendary mount could only be earned by players who rang the Scarab Gong within 10 hours on their realm?";
+WOW_TRIVIA_ANSWERS1[973] = "Black Qiraji Resonating Crystal";
+WOW_TRIVIA_ANSWERS2[973] = "Black Qiraji Battle Tank";
+WOW_TRIVIA_CHOICES[973] = {"Black Qiraji Resonating Crystal", "Swift Zulian Tiger", "Deathcharger's Reins", "Winterspring Frostsaber"};
+
+WOW_TRIVIA_QUESTIONS[974] = "(Vanilla 1.12): Which rare mount can drop from High Priest Thekal in Zul'Gurub?";
+WOW_TRIVIA_ANSWERS1[974] = "Swift Zulian Tiger";
+WOW_TRIVIA_CHOICES[974] = {"Swift Zulian Tiger", "Swift Razzashi Raptor", "Deathcharger's Reins", "Black Qiraji Battle Tank"};
+
+WOW_TRIVIA_QUESTIONS[975] = "(Vanilla 1.12): Which rare mount can drop from Bloodlord Mandokir in Zul'Gurub?";
+WOW_TRIVIA_ANSWERS1[975] = "Swift Razzashi Raptor";
+WOW_TRIVIA_CHOICES[975] = {"Swift Razzashi Raptor", "Swift Zulian Tiger", "Deathcharger's Reins", "Winterspring Frostsaber"};
+
+WOW_TRIVIA_QUESTIONS[976] = "(Vanilla 1.12): Which four Dragons of Nightmare guard the Emerald Dream portals across Duskwood, Ashenvale, Hinterlands, and Feralas? (Name one)";
+WOW_TRIVIA_ANSWERS1[976] = "Ysondre";
+WOW_TRIVIA_ANSWERS2[976] = "Emeriss";
+WOW_TRIVIA_ANSWERS3[976] = "Lethon";
+WOW_TRIVIA_ANSWERS4[976] = "Taerar";
+WOW_TRIVIA_CHOICES[976] = {"Ysondre", "Azuregos", "Onyxia", "Vaelastrasz"};
+
+WOW_TRIVIA_QUESTIONS[977] = "(Vanilla 1.12): Which massive blue dragon world boss patrols the southern coast of Azshara?";
+WOW_TRIVIA_ANSWERS1[977] = "Azuregos";
+WOW_TRIVIA_CHOICES[977] = {"Azuregos", "Sapphiron", "Malygos", "Kalecgos"};
+
+WOW_TRIVIA_QUESTIONS[978] = "(Vanilla 1.12): Which Doomguard world boss spawns in the Tainted Scar of the Blasted Lands?";
+WOW_TRIVIA_ANSWERS1[978] = "Lord Kazzak";
+WOW_TRIVIA_ANSWERS2[978] = "Kazzak";
+WOW_TRIVIA_CHOICES[978] = {"Lord Kazzak", "Kruul", "Mephistroth", "Archimonde"};
+
+WOW_TRIVIA_QUESTIONS[979] = "(Vanilla 1.12): Which reagent is consumed every time a Mage casts Arcane Brilliance or Portal spells?";
+WOW_TRIVIA_ANSWERS1[979] = "Arcane Powder";
+WOW_TRIVIA_ANSWERS2[979] = "Rune of Portals";
+WOW_TRIVIA_CHOICES[979] = {"Arcane Powder", "Rune of Teleportation", "Symbol of Divinity", "Wild Berries"};
+
+WOW_TRIVIA_QUESTIONS[980] = "(Vanilla 1.12): Which reagent must a Paladin carry to cast Divine Intervention?";
+WOW_TRIVIA_ANSWERS1[980] = "Symbol of Divinity";
+WOW_TRIVIA_CHOICES[980] = {"Symbol of Divinity", "Symbol of Kings", "Sacred Candle", "Ankh"};
+
+WOW_TRIVIA_QUESTIONS[981] = "(Vanilla 1.12): Which reagent must a Shaman carry to self-resurrect using Reincarnation?";
+WOW_TRIVIA_ANSWERS1[981] = "Ankh";
+WOW_TRIVIA_CHOICES[981] = {"Ankh", "Maple Seed", "Flash Powder", "Soul Shard"};
+
+WOW_TRIVIA_QUESTIONS[982] = "(Vanilla 1.12): Which class uses Soul Shards stored in Soul Bags to summon demons and cast Shadowburn?";
+WOW_TRIVIA_ANSWERS1[982] = "Warlock";
+WOW_TRIVIA_CHOICES[982] = {"Warlock", "Priest", "Mage", "Shaman"};
+
+WOW_TRIVIA_QUESTIONS[983] = "(Vanilla 1.12): Which boss in the Temple of Ahn'Qiraj requires heavy Nature Resistance for melee and soakers when she enrages at 30% health?";
+WOW_TRIVIA_ANSWERS1[983] = "Princess Huhuran";
+WOW_TRIVIA_ANSWERS2[983] = "Huhuran";
+WOW_TRIVIA_CHOICES[983] = {"Princess Huhuran", "Viscidus", "Ouro", "Fankriss"};
+
+WOW_TRIVIA_QUESTIONS[984] = "(Vanilla 1.12): Which optional slime boss in the Temple of Ahn'Qiraj must be frozen with Frost damage and shattered with rapid melee hits?";
+WOW_TRIVIA_ANSWERS1[984] = "Viscidus";
+WOW_TRIVIA_CHOICES[984] = {"Viscidus", "Ouro", "Battleguard Sartura", "The Prophet Skeram"};
+
+WOW_TRIVIA_QUESTIONS[985] = "(Vanilla 1.12): Which giant sandworm boss in the Temple of Ahn'Qiraj burrows underground when no one is in melee range?";
+WOW_TRIVIA_ANSWERS1[985] = "Ouro";
+WOW_TRIVIA_CHOICES[985] = {"Ouro", "Viscidus", "C'Thun", "Ossirian the Unscarred"};
+
+WOW_TRIVIA_QUESTIONS[986] = "(Vanilla 1.12): Which boss in the Ruins of Ahn'Qiraj requires shattering crystal pillars to remove his 'Strength of Ossirian' enrage buff?";
+WOW_TRIVIA_ANSWERS1[986] = "Ossirian the Unscarred";
+WOW_TRIVIA_ANSWERS2[986] = "Ossirian";
+WOW_TRIVIA_CHOICES[986] = {"Ossirian the Unscarred", "Ayamiss the Hunter", "Buru the Gorger", "Moam"};
+
+WOW_TRIVIA_QUESTIONS[987] = "(Vanilla 1.12): Which boss in the Ruins of Ahn'Qiraj chases a targeted player who must kite him over volatile silithid eggs to crack his shell?";
+WOW_TRIVIA_ANSWERS1[987] = "Buru the Gorger";
+WOW_TRIVIA_ANSWERS2[987] = "Buru";
+WOW_TRIVIA_CHOICES[987] = {"Buru the Gorger", "Kurinnaxx", "General Rajaxx", "Moam"};
+
+WOW_TRIVIA_QUESTIONS[988] = "(Vanilla 1.12): Which dragon boss in Blackwing Lair casts 'Burning Adrenaline', causing affected players to deal massive damage before exploding?";
+WOW_TRIVIA_ANSWERS1[988] = "Vaelastrasz the Corrupt";
+WOW_TRIVIA_ANSWERS2[988] = "Vaelastrasz";
+WOW_TRIVIA_CHOICES[988] = {"Vaelastrasz the Corrupt", "Razorgore the Untamed", "Broodlord Lashlayer", "Nefarian"};
+
+WOW_TRIVIA_QUESTIONS[989] = "(Vanilla 1.12): During the Razorgore the Untamed encounter in Blackwing Lair, which item do players click to Mind Control Razorgore and destroy eggs?";
+WOW_TRIVIA_ANSWERS1[989] = "Orb of Domination";
+WOW_TRIVIA_CHOICES[989] = {"Orb of Domination", "Orb of Command", "Scepter of Celebras", "Drakefire Amulet"};
+
+WOW_TRIVIA_QUESTIONS[990] = "(Vanilla 1.12): Which cloak crafted by Leatherworkers from Onyxia Scale is required to survive Shadow Flame on Nefarian in Blackwing Lair?";
+WOW_TRIVIA_ANSWERS1[990] = "Onyxia Scale Cloak";
+WOW_TRIVIA_CHOICES[990] = {"Onyxia Scale Cloak", "Shroud of the Nathrezim", "Cloak of Firemaw", "Frostwolf Advisor's Cloak"};
+
+WOW_TRIVIA_QUESTIONS[991] = "(Vanilla 1.12): What is the name of the famous two-handed sword dropped by Nefarian in Blackwing Lair with the title 'Greatsword of the Brotherhood'?";
+WOW_TRIVIA_ANSWERS1[991] = "Ashkandi";
+WOW_TRIVIA_ANSWERS2[991] = "Ashkandi, Greatsword of the Brotherhood";
+WOW_TRIVIA_CHOICES[991] = {"Ashkandi, Greatsword of the Brotherhood", "The Untamed Blade", "Bonereaver's Edge", "Dark Edge of Insanity"};
+
+WOW_TRIVIA_QUESTIONS[992] = "(Vanilla 1.12): Which boss in Blackwing Lair drops the rare and prized caster trinket 'Neltharion's Tear'?";
+WOW_TRIVIA_ANSWERS1[992] = "Nefarian";
+WOW_TRIVIA_CHOICES[992] = {"Nefarian", "Chromaggus", "Ebonroc", "Firemaw"};
+
+WOW_TRIVIA_QUESTIONS[993] = "(Vanilla 1.12): Which boss in Blackwing Lair drops 'Crul'shorukh, Edge of Chaos' and 'Mish'undare, Circlet of the Mind Flayer'?";
+WOW_TRIVIA_ANSWERS1[993] = "Nefarian";
+WOW_TRIVIA_CHOICES[993] = {"Nefarian", "Chromaggus", "Broodlord Lashlayer", "Flamegor"};
+
+WOW_TRIVIA_QUESTIONS[994] = "(Vanilla 1.12): Which Blackrock Depths final boss drops the prized melee trinket 'Hand of Justice' (after Patch 1.10 moved it from General Angerforge)?";
+WOW_TRIVIA_ANSWERS1[994] = "Emperor Dagran Thaurissan";
+WOW_TRIVIA_ANSWERS2[994] = "Dagran Thaurissan";
+WOW_TRIVIA_ANSWERS3[994] = "General Angerforge";
+WOW_TRIVIA_CHOICES[994] = {"Emperor Dagran Thaurissan", "Baron Geddon", "General Drakkisath", "Lord Incendius"};
+
+WOW_TRIVIA_QUESTIONS[995] = "(Vanilla 1.12): In Dire Maul East, which satyr boss drops the 'Felcloth' patterns and challenges groups at the bottom of the Conservatory?";
+WOW_TRIVIA_ANSWERS1[995] = "Alzzin the Wildshaper";
+WOW_TRIVIA_ANSWERS2[995] = "Alzzin";
+WOW_TRIVIA_CHOICES[995] = {"Alzzin the Wildshaper", "Zevrim Thornhoof", "Hydrospawn", "Lethtendris"};
+
+WOW_TRIVIA_QUESTIONS[996] = "(Vanilla 1.12): In Dire Maul West, what arcane boss sits inside the Athenaeum surrounded by five crystal pylons that must be disabled first?";
+WOW_TRIVIA_ANSWERS1[996] = "Immol'thar";
+WOW_TRIVIA_CHOICES[996] = {"Immol'thar", "Prince Tortheldrin", "Tendris Warpwood", "King Gordok"};
+
+WOW_TRIVIA_QUESTIONS[997] = "(Vanilla 1.12): In Dire Maul North, which ogre title does a player gain after killing King Gordok while leaving the other ogre bosses alive?";
+WOW_TRIVIA_ANSWERS1[997] = "King of the Gordok";
+WOW_TRIVIA_CHOICES[997] = {"King of the Gordok", "Scarab Lord", "Commander of the Shen'dralar", "Warchief of Dire Maul"};
+
+WOW_TRIVIA_QUESTIONS[998] = "(Vanilla 1.12): What key obtained from Pusillin in Dire Maul East unlocks the doors to Dire Maul West and Dire Maul North?";
+WOW_TRIVIA_ANSWERS1[998] = "Crescent Key";
+WOW_TRIVIA_ANSWERS2[998] = "The Crescent Key";
+WOW_TRIVIA_CHOICES[998] = {"Crescent Key", "Shadowforge Key", "Skeleton Key", "Key to the City"};
+
+WOW_TRIVIA_QUESTIONS[999] = "(Vanilla 1.12): What key dropped by Magistrate Barthilas in Stratholme opens the Service Entrance gate to the Undead side?";
+WOW_TRIVIA_ANSWERS1[999] = "Key to the City";
+WOW_TRIVIA_CHOICES[999] = {"Key to the City", "Crescent Key", "Shadowforge Key", "Viewing Room Key"};
+
+WOW_TRIVIA_QUESTIONS[1000] = "(Vanilla 1.12): Which boss in Stratholme Live is the Grand Crusader and Dreadlord leader disguised within the Scarlet Crusade?";
+WOW_TRIVIA_ANSWERS1[1000] = "Balnazzar";
+WOW_TRIVIA_ANSWERS2[1000] = "Grand Crusader Dathrohan";
+WOW_TRIVIA_CHOICES[1000] = {"Balnazzar", "Baron Rivendare", "Cannon Master Willey", "Timmy the Cruel"};
+

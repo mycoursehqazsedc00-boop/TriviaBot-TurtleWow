@@ -1,7 +1,7 @@
 ## Interface: 11200
 ## Title: TriviaBot-TurtleWoW
 ## Version: 1.2
-## Notes: In-game trivia bot with 4,010 pre-TBC Warcraft/Turtle WoW/General questions, A/B/C/D multiple choice, configurable timers, settings menu, fuzzy answer matching, and a moveable toggle button.
+## Notes: In-game trivia bot with 4,120 pre-TBC Warcraft/Turtle WoW/General questions, A/B/C/D multiple choice, configurable timers, settings menu, fuzzy answer matching, and a moveable toggle button.
 ## Author: LizardBerry
 ## X-Credits: Roadblock (Nostalrius), Guri (Trollbane), Psy (Frostwolf)
 ## SavedVariables: TRIVIA_QLIST, TRIVIA_CHANNEL, TRIVIA_CONFIG
