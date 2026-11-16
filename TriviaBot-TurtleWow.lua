@@ -164,6 +164,56 @@ function Trivia_OnUpdate(elapsed)
 	end
 end
 
+local function Trivia_StripTranslatePrefix(msg)
+	if (not msg) then return ""; end
+	local s = Trivia_Trim(msg);
+	local low = string.lower(s);
+	local p = string.find(low, "wowtranslate", 1, true);
+	if (p and p <= 50) then
+		local closeBracket = string.find(s, "]", p, true);
+		if (closeBracket) then
+			local rest = Trivia_Trim(string.sub(s, closeBracket + 1));
+			if (rest ~= "") then
+				return rest;
+			end
+		end
+	end
+	return s;
+end
+
+local function Trivia_IsBotMessage(msg)
+	if (not msg) then return true; end
+	local stripped = Trivia_StripTranslatePrefix(msg);
+	local low = Trivia_Trim(string.lower(stripped));
+	if (low == "") then return true; end
+	if (string.find(low, "^%[turtletrivia%]")) then
+		return true;
+	end
+	if (string.find(low, "^q:%s")) then
+		return true;
+	end
+	if (string.find(low, "^%[a%] ") and string.find(low, "%[b%] ")) then
+		return true;
+	end
+	if (string.find(low, "^%[c%] ") and string.find(low, "%[d%] ")) then
+		return true;
+	end
+	return false;
+end
+
+local function Trivia_HandleIncomingChat(player, msg)
+	if (not msg or not player) then return; end
+	local cleanMsg = Trivia_StripTranslatePrefix(msg);
+	if (Trivia_IsBotMessage(cleanMsg)) then return; end
+
+	local lowerMsg = Trivia_Trim(string.lower(cleanMsg));
+	if (lowerMsg == "score" or lowerMsg == "!score") then
+		Trivia_WhisperScore(player);
+	elseif (TRIVIA_ACCEPTING_ANSWERS) then
+		Trivia_CheckAnswer(player, cleanMsg);
+	end
+end
+
 function Trivia_OnEvent(event)
 	if (event == "ADDON_LOADED") then
 		if (not TRIVIA_LOADED and (arg1 == "TriviaBot-TurtleWow" or arg1 == "TriviaBot-TurtleWoW")) then
@@ -181,24 +231,14 @@ function Trivia_OnEvent(event)
 		local channel = arg9;
 		if (msg and player and channel) then
 			if (string.lower(channel) == string.lower(TRIVIA_CHANNEL)) then
-				local lowerMsg = Trivia_Trim(string.lower(msg));
-				if (lowerMsg == "score" or lowerMsg == "!score") then
-					Trivia_WhisperScore(player);
-				elseif (TRIVIA_ACCEPTING_ANSWERS) then
-					Trivia_CheckAnswer(player, msg);
-				end
+				Trivia_HandleIncomingChat(player, msg);
 			end
 		end
 	elseif (event == "CHAT_MSG_SAY" or event == "CHAT_MSG_GUILD" or event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER" or event == "CHAT_MSG_PARTY") then
 		local msg = arg1;
 		local player = arg2;
 		if (msg and player and Trivia_IsActiveChannelEvent(event)) then
-			local lowerMsg = Trivia_Trim(string.lower(msg));
-			if (lowerMsg == "score" or lowerMsg == "!score") then
-				Trivia_WhisperScore(player);
-			elseif (TRIVIA_ACCEPTING_ANSWERS) then
-				Trivia_CheckAnswer(player, msg);
-			end
+			Trivia_HandleIncomingChat(player, msg);
 		end
 	elseif (event == "RETRY_CHANNEL_CHANGE") then
 		Trivia_ChangeChannel();
@@ -1270,8 +1310,33 @@ end
 
 function Trivia_CheckAnswer(player, msg)
 	if (not TRIVIA_ACCEPTING_ANSWERS) then return; end
+	if (Trivia_IsBotMessage(msg)) then return; end
 	local qIdx = TRIVIA_QUESTION_ORDER[TRIVIA_ACTIVE_QUESTION];
 	if (not qIdx) then return; end
+
+	-- Prevent copying multiple A/B/C/D options into one message to exploit fuzzy substring matching
+	if (TRIVIA_CONFIG.showChoices and TRIVIA_CURRENT_OPTIONS["a"] and TRIVIA_CURRENT_CORRECT_LETTER) then
+		local normMsg = " " .. Trivia_NormalizeText(msg) .. " ";
+		local normCorrectOpt = Trivia_NormalizeText(TRIVIA_CURRENT_OPTIONS[TRIVIA_CURRENT_CORRECT_LETTER]);
+		local letters = {"a", "b", "c", "d"};
+		local distractorHits = 0;
+		local idx = 1;
+		while (idx <= 4) do
+			local ltr = letters[idx];
+			if (ltr ~= TRIVIA_CURRENT_CORRECT_LETTER) then
+				local optNorm = Trivia_NormalizeText(TRIVIA_CURRENT_OPTIONS[ltr]);
+				if (string.len(optNorm) >= 4 and not string.find(normCorrectOpt, optNorm, 1, true)) then
+					if (string.find(normMsg, " " .. optNorm .. " ", 1, true)) then
+						distractorHits = distractorHits + 1;
+					end
+				end
+			end
+			idx = idx + 1;
+		end
+		if (distractorHits >= 1 and string.len(normMsg) > string.len(normCorrectOpt) + 6) then
+			return;
+		end
+	end
 
 	local isCorrect = false;
 
@@ -1401,6 +1466,14 @@ function Trivia_ReportScores()
 	end
 end
 
+local function Trivia_SendRawChat(line, chatType, language, channel)
+	if (type(WoWTranslate_SendRaw) == "function") then
+		WoWTranslate_SendRaw(line, chatType, language, channel);
+	else
+		SendChatMessage(line, chatType, language, channel);
+	end
+end
+
 function Trivia_WhisperScore(player)
 	if (not player) then return; end
 	local now = GetTime();
@@ -1411,7 +1484,7 @@ function Trivia_WhisperScore(player)
 
 	local score = TRIVIA_SCORES[player] or 0;
 	local ess = (score == 1) and "" or "s";
-	SendChatMessage("[TurtleTrivia]: You currently have " .. score .. " point" .. ess .. ".", "WHISPER", nil, player);
+	Trivia_SendRawChat("[TurtleTrivia]: You currently have " .. score .. " point" .. ess .. ".", "WHISPER", nil, player);
 end
 
 function Trivia_ClearTells(player)
@@ -1506,17 +1579,17 @@ end
 
 local function Trivia_DispatchSingleLine(line)
 	if (TRIVIA_CHANNEL == "GUILD") then
-		SendChatMessage(line, "GUILD");
+		Trivia_SendRawChat(line, "GUILD");
 	elseif (TRIVIA_CHANNEL == "SAY") then
-		SendChatMessage(line, "SAY");
+		Trivia_SendRawChat(line, "SAY");
 	elseif (TRIVIA_CHANNEL == "PARTY") then
-		SendChatMessage(line, "PARTY");
+		Trivia_SendRawChat(line, "PARTY");
 	elseif (TRIVIA_CHANNEL == "RAID") then
-		SendChatMessage(line, "RAID");
+		Trivia_SendRawChat(line, "RAID");
 	elseif (TRIVIA_CHANNEL ~= nil) then
 		local id = GetChannelName(TRIVIA_CHANNEL);
 		if (id > 0) then
-			SendChatMessage(line, "CHANNEL", nil, id);
+			Trivia_SendRawChat(line, "CHANNEL", nil, id);
 		else
 			Trivia_ErrorMessage("Unable to send to channel '" .. tostring(TRIVIA_CHANNEL) .. "'.");
 			Trivia_ErrorMessage("Reset channel with '/trivia channel [SAY|PARTY|RAID|GUILD|<channel>]'");
