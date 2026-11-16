@@ -1,10 +1,11 @@
 --[[
 --
--- TriviaBot-TurtleWoW Version 1.1
+-- TriviaBot-TurtleWoW Version 1.2
 -- Maintained by LizardBerry
 -- Based on work created by Roadblock of Nostalrius, Guri of Trollbane, and Psy on Frostwolf
--- Improved with Turtle WoW & Warcraft I/II/III/Lore questions, A/B/C/D multiple choice,
--- fuzzy ("likely") answer matching, and a moveable on-screen toggle button.
+-- Improved with 4,010 pre-TBC Warcraft/Turtle WoW/General questions, A/B/C/D multiple choice,
+-- configurable question timers, settings menu, fuzzy ("likely") answer matching,
+-- and a moveable on-screen toggle button.
 --
 --]]
 
@@ -21,10 +22,11 @@ TRIVIA_ENABLED = false;
 TRIVIA_ACCEPTING_ANSWERS = false;
 TRIVIA_LOADED = false;
 
-TRIVIA_QUESTION_TIMEOUT = 45;  -- 45 seconds to answer correctly
-TRIVIA_QUESTION_TIMEWARN = 25; -- 20 seconds left warning (at 25s elapsed)
+TRIVIA_QUESTION_TIMEOUT = 45;  -- Default seconds per question (overridden by TRIVIA_CONFIG.questionTimeout)
+TRIVIA_QUESTION_TIMEWARN = 25; -- Legacy fallback
+TRIVIA_WARN_REMAINING = 15;    -- Computed remaining seconds announced by QUESTION_WARN
 
-TRIVIA_VERSION = "1.1";
+TRIVIA_VERSION = "1.2";
 
 NEW_TRIVIA_CHANNEL = nil;
 
@@ -58,9 +60,10 @@ TRIVIA_WRONG_LETTER_COOLDOWN = {};
 INVALID_COMMAND = RED .. "Invalid Command Entered. " .. WHITE .. "Try '/trivia help'";
 
 TRIVIA_UPDATEINTERVAL = 0.5;
+local lastTimerSecond = -1;
 
 -- Client mod feature detection (checked at PLAYER_LOGIN)
-local HAS_XP3 = false;
+HAS_XP3 = false;
 
 -- Reusable row buffers for Levenshtein distance (avoids table allocation in hot path)
 local levRow0 = {};
@@ -123,8 +126,23 @@ function Trivia_EnsureConfig()
 	if (TRIVIA_CONFIG.showChoices == nil) then
 		TRIVIA_CONFIG.showChoices = true;
 	end
+	if (TRIVIA_CONFIG.showButtonTimer == nil) then
+		TRIVIA_CONFIG.showButtonTimer = true;
+	end
 	if (TRIVIA_CONFIG.notifyTaskbar == nil) then
 		TRIVIA_CONFIG.notifyTaskbar = false;
+	end
+	if (type(TRIVIA_CONFIG.questionTimeout) ~= "number" or TRIVIA_CONFIG.questionTimeout < 10 or TRIVIA_CONFIG.questionTimeout > 180) then
+		TRIVIA_CONFIG.questionTimeout = 45;
+	end
+	if (type(TRIVIA_CONFIG.warnBeforeEnd) ~= "number" or TRIVIA_CONFIG.warnBeforeEnd < 0 or TRIVIA_CONFIG.warnBeforeEnd > 60) then
+		TRIVIA_CONFIG.warnBeforeEnd = 15;
+	end
+	if (type(TRIVIA_CONFIG.questionInterval) ~= "number" or TRIVIA_CONFIG.questionInterval < 3 or TRIVIA_CONFIG.questionInterval > 30) then
+		TRIVIA_CONFIG.questionInterval = 7;
+	end
+	if (type(TRIVIA_CONFIG.scoreReportEvery) ~= "number" or TRIVIA_CONFIG.scoreReportEvery < 0 or TRIVIA_CONFIG.scoreReportEvery > 20) then
+		TRIVIA_CONFIG.scoreReportEvery = 5;
 	end
 	if (not TRIVIA_CONFIG.point) then
 		TRIVIA_CONFIG.point = "TOP";
@@ -132,6 +150,7 @@ function Trivia_EnsureConfig()
 		TRIVIA_CONFIG.xOfs = 0;
 		TRIVIA_CONFIG.yOfs = -60;
 	end
+	TRIVIA_QUESTION_TIMEOUT = TRIVIA_CONFIG.questionTimeout;
 end
 
 function Trivia_OnUpdate(elapsed)
@@ -141,6 +160,7 @@ function Trivia_OnUpdate(elapsed)
 		if (TRIVIA_SCHEDULE and table.getn(TRIVIA_SCHEDULE) > 0) then
 			Trivia_DoSchedule();
 		end
+		Trivia_UpdateCountdownUI();
 	end
 end
 
@@ -189,7 +209,8 @@ function Trivia_OnEvent(event)
 	elseif (event == "QUESTION_TIMEOUT") then
 		Trivia_QuestionTimeout();
 	elseif (event == "QUESTION_WARN") then
-		Trivia_SendMessage("20 seconds left! (Reply with A, B, C, D or the answer)");
+		local rem = TRIVIA_WARN_REMAINING or 15;
+		Trivia_SendMessage(rem .. " seconds left! (Reply with A, B, C, D or the answer)");
 	elseif (event == "REPORT_SCORERS") then
 		Trivia_ReportScores();
 	elseif (event == "SHOW_ANSWER") then
@@ -230,14 +251,15 @@ function Trivia_Initialize()
 		TRIVIA_QLIST = "warcraft";
 	end
 
-	TRIVIA_TIME_RECORD = {["time"] = TRIVIA_QUESTION_TIMEOUT + 1, ["holder"] = "noone"};
+	TRIVIA_SCORE_REPORT = TRIVIA_CONFIG.scoreReportEvery;
+	TRIVIA_TIME_RECORD = {["time"] = TRIVIA_CONFIG.questionTimeout + 1, ["holder"] = "noone"};
 
 	Trivia_LoadQuestionSet(TRIVIA_QLIST, true);
 	Trivia_CreateToggleButton();
 	Trivia_UpdateToggleButton();
 
 	TRIVIA_LOADED = true;
-	Trivia_ConsoleMessage("Version " .. TRIVIA_VERSION .. " loaded. Set: " .. YELLOW .. TRIVIA_QLIST .. WHITE .. " (" .. table.getn(TRIVIA_QUESTIONS) .. " questions). Type " .. CYAN .. "/trivia help" .. WHITE .. " for commands.");
+	Trivia_ConsoleMessage("Version " .. TRIVIA_VERSION .. " loaded. Set: " .. YELLOW .. TRIVIA_QLIST .. WHITE .. " (" .. table.getn(TRIVIA_QUESTIONS) .. " questions). Type " .. CYAN .. "/trivia" .. WHITE .. " for Settings Menu or " .. CYAN .. "/trivia help" .. WHITE .. ".");
 end
 
 -------------------------------------------------------------------------------
@@ -306,10 +328,86 @@ function Trivia_LoadQuestionSet(qlist, silent)
 	TRIVIA_QLIST = qlist;
 	Trivia_RandomiseOrder();
 	Trivia_UpdateToggleButton();
+	if (Trivia_RefreshOptionsFrame) then
+		Trivia_RefreshOptionsFrame();
+	end
 
 	if (not silent) then
 		Trivia_ConsoleMessage("Question set selected: " .. YELLOW .. TRIVIA_QLIST .. WHITE .. " (" .. table.getn(TRIVIA_QUESTIONS) .. " questions).");
 	end
+	return true;
+end
+
+function Trivia_SetQuestionTimeout(sec, silent)
+	Trivia_EnsureConfig();
+	sec = tonumber(sec);
+	if (not sec) then return false; end
+	sec = math.floor(sec + 0.5);
+	if (sec < 10) then sec = 10; end
+	if (sec > 180) then sec = 180; end
+	TRIVIA_CONFIG.questionTimeout = sec;
+	TRIVIA_QUESTION_TIMEOUT = sec;
+	if (TRIVIA_TIME_RECORD and TRIVIA_TIME_RECORD["holder"] == "noone") then
+		TRIVIA_TIME_RECORD["time"] = sec + 1;
+	end
+	if (not silent) then
+		Trivia_ConsoleMessage("Time per question set to " .. YELLOW .. sec .. " seconds" .. WHITE .. ".");
+	end
+	if (Trivia_RefreshOptionsFrame) then Trivia_RefreshOptionsFrame(); end
+	return true;
+end
+
+function Trivia_SetWarnBeforeEnd(sec, silent)
+	Trivia_EnsureConfig();
+	sec = tonumber(sec);
+	if (not sec) then return false; end
+	sec = math.floor(sec + 0.5);
+	if (sec < 0) then sec = 0; end
+	if (sec > 60) then sec = 60; end
+	TRIVIA_CONFIG.warnBeforeEnd = sec;
+	if (not silent) then
+		if (sec == 0) then
+			Trivia_ConsoleMessage("Question time warning is now " .. RED .. "DISABLED" .. WHITE .. ".");
+		else
+			Trivia_ConsoleMessage("Time warning set to " .. YELLOW .. sec .. " seconds" .. WHITE .. " before timeout.");
+		end
+	end
+	if (Trivia_RefreshOptionsFrame) then Trivia_RefreshOptionsFrame(); end
+	return true;
+end
+
+function Trivia_SetQuestionInterval(sec, silent)
+	Trivia_EnsureConfig();
+	sec = tonumber(sec);
+	if (not sec) then return false; end
+	sec = math.floor(sec + 0.5);
+	if (sec < 3) then sec = 3; end
+	if (sec > 30) then sec = 30; end
+	TRIVIA_CONFIG.questionInterval = sec;
+	if (not silent) then
+		Trivia_ConsoleMessage("Delay between questions set to " .. YELLOW .. sec .. " seconds" .. WHITE .. ".");
+	end
+	if (Trivia_RefreshOptionsFrame) then Trivia_RefreshOptionsFrame(); end
+	return true;
+end
+
+function Trivia_SetScoreReportEvery(n, silent)
+	Trivia_EnsureConfig();
+	n = tonumber(n);
+	if (not n) then return false; end
+	n = math.floor(n + 0.5);
+	if (n < 0) then n = 0; end
+	if (n > 20) then n = 20; end
+	TRIVIA_CONFIG.scoreReportEvery = n;
+	TRIVIA_SCORE_REPORT = n;
+	if (not silent) then
+		if (n == 0) then
+			Trivia_ConsoleMessage("Automatic leaderboard report is now " .. RED .. "DISABLED" .. WHITE .. ".");
+		else
+			Trivia_ConsoleMessage("Leaderboard will report every " .. YELLOW .. n .. WHITE .. " questions.");
+		end
+	end
+	if (Trivia_RefreshOptionsFrame) then Trivia_RefreshOptionsFrame(); end
 	return true;
 end
 
@@ -329,14 +427,22 @@ function Trivia_Command(cmd)
 	end
 
 	if (numArgs == 0) then
-		Trivia_Help();
+		if (Trivia_ToggleOptionsFrame) then
+			Trivia_ToggleOptionsFrame();
+		else
+			Trivia_Help();
+		end
 		return;
 	end
 
 	local sub = msgArgs[1];
 	local arg = msgArgs[2];
 
-	if (sub == "start") then
+	if (sub == "menu" or sub == "config" or sub == "options" or sub == "settings" or sub == "ui") then
+		if (Trivia_ToggleOptionsFrame) then
+			Trivia_ToggleOptionsFrame();
+		end
+	elseif (sub == "start") then
 		Trivia_Start();
 	elseif (sub == "stop") then
 		Trivia_Stop();
@@ -355,13 +461,37 @@ function Trivia_Command(cmd)
 		end
 	elseif (sub == "clear") then
 		TRIVIA_SCORES = {};
-		TRIVIA_TIME_RECORD = {["time"] = TRIVIA_QUESTION_TIMEOUT + 1, ["holder"] = "noone"};
+		TRIVIA_TIME_RECORD = {["time"] = TRIVIA_CONFIG.questionTimeout + 1, ["holder"] = "noone"};
 		Trivia_ConsoleMessage("Scores cleared.");
 		if (TRIVIA_ENABLED) then
 			Trivia_SendMessage("Scores cleared.");
 		end
 	elseif (sub == "score" or sub == "scores") then
 		Trivia_ReportScores();
+	elseif (sub == "timer" or sub == "timeout" or sub == "time") then
+		if (not arg) then
+			Trivia_ConsoleMessage("Current time per question: " .. YELLOW .. TRIVIA_CONFIG.questionTimeout .. "s" .. WHITE .. " (Usage: /trivia timer <10-180>)");
+		elseif (not Trivia_SetQuestionTimeout(arg, false)) then
+			Trivia_ErrorMessage("Usage: /trivia timer <10-180>");
+		end
+	elseif (sub == "warn") then
+		if (not arg) then
+			Trivia_ConsoleMessage("Current time warning: " .. YELLOW .. TRIVIA_CONFIG.warnBeforeEnd .. "s before timeout" .. WHITE .. " (Usage: /trivia warn <0-60>, 0 = off)");
+		elseif (not Trivia_SetWarnBeforeEnd(arg, false)) then
+			Trivia_ErrorMessage("Usage: /trivia warn <0-60>");
+		end
+	elseif (sub == "delay" or sub == "interval") then
+		if (not arg) then
+			Trivia_ConsoleMessage("Current delay between questions: " .. YELLOW .. TRIVIA_CONFIG.questionInterval .. "s" .. WHITE .. " (Usage: /trivia delay <3-30>)");
+		elseif (not Trivia_SetQuestionInterval(arg, false)) then
+			Trivia_ErrorMessage("Usage: /trivia delay <3-30>");
+		end
+	elseif (sub == "report") then
+		if (not arg) then
+			Trivia_ConsoleMessage("Current leaderboard report interval: " .. YELLOW .. TRIVIA_CONFIG.scoreReportEvery .. WHITE .. " (Usage: /trivia report <0-20>, 0 = off)");
+		elseif (not Trivia_SetScoreReportEvery(arg, false)) then
+			Trivia_ErrorMessage("Usage: /trivia report <0-20>");
+		end
 	elseif (sub == "choices" or sub == "abcd") then
 		Trivia_EnsureConfig();
 		if (arg == "on") then
@@ -373,6 +503,7 @@ function Trivia_Command(cmd)
 		end
 		local stateStr = TRIVIA_CONFIG.showChoices and (GREEN .. "ENABLED" .. WHITE) or (RED .. "DISABLED" .. WHITE);
 		Trivia_ConsoleMessage("Multiple-choice (A/B/C/D) display is now " .. stateStr .. ".");
+		if (Trivia_RefreshOptionsFrame) then Trivia_RefreshOptionsFrame(); end
 	elseif (sub == "lock") then
 		Trivia_EnsureConfig();
 		if (arg == "on" or arg == "true") then
@@ -433,6 +564,7 @@ function Trivia_Command(cmd)
 		TRIVIA_CONFIG.notifyTaskbar = not TRIVIA_CONFIG.notifyTaskbar;
 		local notifyStr = TRIVIA_CONFIG.notifyTaskbar and (GREEN .. "ENABLED" .. WHITE) or (RED .. "DISABLED" .. WHITE);
 		Trivia_ConsoleMessage("UnitXP SP3 taskbar notification on answer: " .. notifyStr .. ".");
+		if (Trivia_RefreshOptionsFrame) then Trivia_RefreshOptionsFrame(); end
 	elseif (sub == "qlist") then
 		if (not arg) then
 			Trivia_ConsoleMessage("Current question set: " .. YELLOW .. tostring(TRIVIA_QLIST) .. WHITE .. " (" .. table.getn(TRIVIA_QUESTIONS) .. " questions)");
@@ -485,10 +617,14 @@ end
 
 function Trivia_Help()
 	Trivia_ConsoleMessage(YELLOW .. "--- TriviaBot-TurtleWoW v" .. TRIVIA_VERSION .. " Commands ---");
+	Trivia_ConsoleMessage(CYAN .. "/trivia" .. WHITE .. " (or " .. CYAN .. "/trivia menu" .. WHITE .. ") - Open the Settings Menu.");
 	Trivia_ConsoleMessage(CYAN .. "/trivia start | stop | toggle" .. WHITE .. " - Start, stop, or toggle TriviaBot.");
-	Trivia_ConsoleMessage(CYAN .. "/trivia lock" .. WHITE .. " - Lock/unlock the moveable on-screen Trivia button.");
-	Trivia_ConsoleMessage(CYAN .. "/trivia disable | enable" .. WHITE .. " - Disable (hide) or enable (show) the Trivia button.");
-	Trivia_ConsoleMessage(CYAN .. "/trivia button reset" .. WHITE .. " - Reset the moveable button to screen center.");
+	Trivia_ConsoleMessage(CYAN .. "/trivia timer <10-180>" .. WHITE .. " - Set seconds allowed per question.");
+	Trivia_ConsoleMessage(CYAN .. "/trivia warn <0-60>" .. WHITE .. " - Set warning seconds before timeout (0 = off).");
+	Trivia_ConsoleMessage(CYAN .. "/trivia delay <3-30>" .. WHITE .. " - Set delay seconds between questions.");
+	Trivia_ConsoleMessage(CYAN .. "/trivia lock | unlock" .. WHITE .. " - Lock/unlock the moveable Trivia button.");
+	Trivia_ConsoleMessage(CYAN .. "/trivia disable | enable" .. WHITE .. " - Hide or show the Trivia button.");
+	Trivia_ConsoleMessage(CYAN .. "/trivia button reset" .. WHITE .. " - Reset the moveable button to top-center.");
 	Trivia_ConsoleMessage(CYAN .. "/trivia qlist [warcraft|turtle|wow|geography|normal|all]" .. WHITE .. " - Select question list.");
 	Trivia_ConsoleMessage(CYAN .. "/trivia channel [SAY|PARTY|RAID|GUILD|<channel>]" .. WHITE .. " - Set trivia chat channel.");
 	Trivia_ConsoleMessage(CYAN .. "/trivia choices" .. WHITE .. " - Toggle A/B/C/D multiple-choice options on/off.");
@@ -504,15 +640,18 @@ function Trivia_Start()
 		Trivia_ConsoleMessage("Trivia is already running! Use '/trivia stop' to stop.");
 		return;
 	end
+	Trivia_EnsureConfig();
 	if (table.getn(TRIVIA_QUESTIONS) == 0) then
 		Trivia_LoadQuestionSet(TRIVIA_QLIST or "warcraft", true);
 	end
 	TRIVIA_ENABLED = true;
 	TRIVIA_ACCEPTING_ANSWERS = false;
+	lastTimerSecond = -1;
 	Trivia_UnSchedule("all");
 	Trivia_UpdateToggleButton();
-	Trivia_ConsoleMessage("Trivia started in channel " .. YELLOW .. TRIVIA_CHANNEL .. WHITE .. " (" .. TRIVIA_QLIST .. " set). First question in 2 seconds!");
-	Trivia_SendMessage("Trivia started (" .. TRIVIA_QLIST .. " set)! Answer with A, B, C, D or type the answer. First question coming up!");
+	local timeout = TRIVIA_CONFIG.questionTimeout;
+	Trivia_ConsoleMessage("Trivia started in channel " .. YELLOW .. TRIVIA_CHANNEL .. WHITE .. " (" .. TRIVIA_QLIST .. " set, " .. timeout .. "s/question). First question in 2 seconds!");
+	Trivia_SendMessage("Trivia started (" .. TRIVIA_QLIST .. " set, " .. timeout .. "s per question)! Answer with A, B, C, D or type the answer.");
 	Trivia_Schedule("NEXT_QUESTION", 2);
 end
 
@@ -521,6 +660,7 @@ function Trivia_Stop()
 	local wasEnabled = TRIVIA_ENABLED;
 	TRIVIA_ENABLED = false;
 	TRIVIA_ACCEPTING_ANSWERS = false;
+	lastTimerSecond = -1;
 	Trivia_UpdateToggleButton();
 	if (wasEnabled) then
 		Trivia_SendMessage("Trivia bot stopped.");
@@ -564,7 +704,7 @@ function Trivia_CreateToggleButton()
 	Trivia_EnsureConfig();
 
 	local btn = CreateFrame("Button", "TriviaBotToggleButton", UIParent);
-	btn:SetWidth(124);
+	btn:SetWidth(134);
 	btn:SetHeight(28);
 	btn:SetFrameStrata("MEDIUM");
 	btn:SetToplevel(true);
@@ -623,11 +763,21 @@ function Trivia_CreateToggleButton()
 
 	btn:SetScript("OnClick", function()
 		if (arg1 == "RightButton") then
-			if (TRIVIA_ENABLED) then
-				Trivia_SkipQuestion();
-				Trivia_ConsoleMessage("Question skipped.");
+			if (IsShiftKeyDown()) then
+				if (TRIVIA_ENABLED) then
+					Trivia_SkipQuestion();
+					Trivia_ConsoleMessage("Question skipped.");
+				else
+					Trivia_CycleQuestionSet();
+				end
 			else
-				Trivia_CycleQuestionSet();
+				if (Trivia_ToggleOptionsFrame) then
+					Trivia_ToggleOptionsFrame();
+				elseif (TRIVIA_ENABLED) then
+					Trivia_SkipQuestion();
+				else
+					Trivia_CycleQuestionSet();
+				end
 			end
 		else
 			Trivia_Toggle();
@@ -657,26 +807,61 @@ function Trivia_ShowButtonTooltip(frame)
 	end
 	GameTooltip:AddDoubleLine("Channel:", tostring(TRIVIA_CHANNEL), 0.8, 0.8, 0.8, 1, 1, 1);
 	GameTooltip:AddDoubleLine("Question Set:", tostring(TRIVIA_QLIST) .. " (" .. table.getn(TRIVIA_QUESTIONS) .. ")", 0.8, 0.8, 0.8, 0.4, 0.9, 1);
+	GameTooltip:AddDoubleLine("Timer:", tostring(TRIVIA_CONFIG.questionTimeout) .. "s / question", 0.8, 0.8, 0.8, 1, 0.82, 0);
 	GameTooltip:AddDoubleLine("A/B/C/D Choices:", TRIVIA_CONFIG.showChoices and "Enabled" or "Disabled", 0.8, 0.8, 0.8, 1, 1, 1);
 	GameTooltip:AddDoubleLine("Button Position:", TRIVIA_CONFIG.locked and "Locked" or "Unlocked", 0.8, 0.8, 0.8, TRIVIA_CONFIG.locked and 1 or 0.3, TRIVIA_CONFIG.locked and 0.6 or 1, 0.3);
 	GameTooltip:AddLine(" ");
 	GameTooltip:AddLine("Left-Click: " .. WHITE .. (TRIVIA_ENABLED and "Stop Trivia" or "Start Trivia"), 0, 1, 0);
+	GameTooltip:AddLine("Right-Click: " .. WHITE .. "Open Settings Menu", 1, 0.82, 0);
 	if (TRIVIA_ENABLED) then
-		GameTooltip:AddLine("Right-Click: " .. WHITE .. "Skip Current Question", 0, 0.8, 1);
+		GameTooltip:AddLine("Shift + Right-Click: " .. WHITE .. "Skip Current Question", 0, 0.8, 1);
 	else
-		GameTooltip:AddLine("Right-Click: " .. WHITE .. "Cycle Question Set", 0, 0.8, 1);
+		GameTooltip:AddLine("Shift + Right-Click: " .. WHITE .. "Cycle Question Set", 0, 0.8, 1);
 	end
 	if (not TRIVIA_CONFIG.locked) then
 		GameTooltip:AddLine("Left-Drag: " .. WHITE .. "Move Button", 0.7, 0.7, 0.7);
 	end
-	GameTooltip:AddLine("Commands: " .. GREY .. "/trivia lock | /trivia disable", 0.6, 0.6, 0.6);
+	GameTooltip:AddLine("Commands: " .. GREY .. "/trivia | /trivia lock | /trivia disable", 0.6, 0.6, 0.6);
 	GameTooltip:Show();
+end
+
+function Trivia_GetRemainingSeconds()
+	if (not TRIVIA_ENABLED or not TRIVIA_ACCEPTING_ANSWERS) then
+		return nil;
+	end
+	local timeout = (TRIVIA_CONFIG and TRIVIA_CONFIG.questionTimeout) or 45;
+	local rem = math.ceil(timeout - (GetTime() - TRIVIA_QUESTION_STARTTIME));
+	if (rem < 0) then rem = 0; end
+	return rem;
+end
+
+function Trivia_UpdateCountdownUI()
+	if (not TriviaBotToggleButton or not TriviaBotToggleButton:IsShown()) then
+		return;
+	end
+	if (TRIVIA_ENABLED and TRIVIA_ACCEPTING_ANSWERS and TRIVIA_CONFIG and TRIVIA_CONFIG.showButtonTimer) then
+		local rem = Trivia_GetRemainingSeconds();
+		if (rem and rem ~= lastTimerSecond) then
+			lastTimerSecond = rem;
+			local lockTag = TRIVIA_CONFIG.locked and (GREY .. " [L]" .. WHITE) or "";
+			TriviaBotToggleButton.text:SetText(WHITE .. "Trivia: " .. GREEN .. "ON " .. YELLOW .. "(" .. rem .. "s)" .. lockTag);
+			if (Trivia_RefreshOptionsTimer) then
+				Trivia_RefreshOptionsTimer(rem);
+			end
+		end
+	elseif (lastTimerSecond ~= -1) then
+		lastTimerSecond = -1;
+		Trivia_UpdateToggleButton();
+	end
 end
 
 function Trivia_UpdateToggleButton()
 	Trivia_EnsureConfig();
 	if (not TriviaBotToggleButton) then
 		Trivia_CreateToggleButton();
+	end
+	if (Trivia_RefreshOptionsFrame) then
+		Trivia_RefreshOptionsFrame();
 	end
 	if (not TriviaBotToggleButton) then
 		return;
@@ -690,9 +875,18 @@ function Trivia_UpdateToggleButton()
 	TriviaBotToggleButton:Show();
 	local lockTag = TRIVIA_CONFIG.locked and (GREY .. " [L]" .. WHITE) or "";
 	if (TRIVIA_ENABLED) then
-		TriviaBotToggleButton.text:SetText(WHITE .. "Trivia: " .. GREEN .. "ON" .. lockTag);
+		local timerTag = "";
+		if (TRIVIA_ACCEPTING_ANSWERS and TRIVIA_CONFIG.showButtonTimer) then
+			local rem = Trivia_GetRemainingSeconds();
+			if (rem) then
+				lastTimerSecond = rem;
+				timerTag = " " .. YELLOW .. "(" .. rem .. "s)";
+			end
+		end
+		TriviaBotToggleButton.text:SetText(WHITE .. "Trivia: " .. GREEN .. "ON" .. timerTag .. lockTag);
 		TriviaBotToggleButton:SetBackdropBorderColor(0.2, 0.9, 0.2, 1.0);
 	else
+		lastTimerSecond = -1;
 		TriviaBotToggleButton.text:SetText(WHITE .. "Trivia: " .. RED .. "OFF" .. lockTag);
 		TriviaBotToggleButton:SetBackdropBorderColor(0.6, 0.6, 0.6, 1.0);
 	end
@@ -768,16 +962,14 @@ function Trivia_BuildChoicesForQuestion(qIdx)
 		end
 	end
 
-	-- Determine which option is the canonical correct choice before shuffling (index 1)
-	local canonicalCorrect = opts[1];
-
-	-- Fisher-Yates shuffle on the 4 options
+	-- Shuffle index order so index 1 (canonical answer) is always tracked reliably
+	local order = {1, 2, 3, 4};
 	local i = 4;
 	while (i >= 2) do
 		local r = math.random(i);
-		local tmp = opts[i];
-		opts[i] = opts[r];
-		opts[r] = tmp;
+		local tmp = order[i];
+		order[i] = order[r];
+		order[r] = tmp;
 		i = i - 1;
 	end
 
@@ -788,8 +980,9 @@ function Trivia_BuildChoicesForQuestion(qIdx)
 	local idx = 1;
 	while (idx <= 4) do
 		local ltr = letters[idx];
-		TRIVIA_CURRENT_OPTIONS[ltr] = opts[idx];
-		if (opts[idx] == canonicalCorrect) then
+		local srcIndex = order[idx];
+		TRIVIA_CURRENT_OPTIONS[ltr] = opts[srcIndex];
+		if (srcIndex == 1) then
 			TRIVIA_CURRENT_CORRECT_LETTER = ltr;
 		end
 		idx = idx + 1;
@@ -797,6 +990,7 @@ function Trivia_BuildChoicesForQuestion(qIdx)
 end
 
 function Trivia_AskQuestion()
+	Trivia_EnsureConfig();
 	local totalQ = table.getn(TRIVIA_QUESTIONS);
 	if (totalQ == 0) then
 		Trivia_ErrorMessage("No questions loaded in current set!");
@@ -815,50 +1009,71 @@ function Trivia_AskQuestion()
 	TRIVIA_WRONG_LETTER_COOLDOWN = {};
 	Trivia_BuildChoicesForQuestion(qIdx);
 
+	local timeout = TRIVIA_CONFIG.questionTimeout or 45;
+	local warnBefore = TRIVIA_CONFIG.warnBeforeEnd;
+	if (warnBefore == nil) then warnBefore = 15; end
+
+	TRIVIA_QUESTION_STARTTIME = GetTime();
+	TRIVIA_ACCEPTING_ANSWERS = true;
+	lastTimerSecond = -1;
+	Trivia_UnSchedule("all");
+	Trivia_Schedule("QUESTION_TIMEOUT", timeout);
+	if (warnBefore > 0 and warnBefore < timeout) then
+		TRIVIA_WARN_REMAINING = warnBefore;
+		Trivia_Schedule("QUESTION_WARN", timeout - warnBefore);
+	elseif (warnBefore >= timeout and timeout >= 20) then
+		TRIVIA_WARN_REMAINING = math.floor(timeout / 2);
+		Trivia_Schedule("QUESTION_WARN", timeout - TRIVIA_WARN_REMAINING);
+	end
+	Trivia_UpdateToggleButton();
+
 	Trivia_SendMessage("Q: " .. TRIVIA_QUESTIONS[qIdx]);
 
 	if (TRIVIA_CONFIG.showChoices and TRIVIA_CURRENT_OPTIONS["a"]) then
-		local lineAB = "A) " .. TRIVIA_CURRENT_OPTIONS["a"] .. " | B) " .. TRIVIA_CURRENT_OPTIONS["b"];
-		local lineCD = "C) " .. TRIVIA_CURRENT_OPTIONS["c"] .. " | D) " .. TRIVIA_CURRENT_OPTIONS["d"];
-		local singleLine = lineAB .. " | " .. lineCD;
-		if (string.len(singleLine) <= 220) then
+		local lineAB = "[A] " .. TRIVIA_CURRENT_OPTIONS["a"] .. "   [B] " .. TRIVIA_CURRENT_OPTIONS["b"];
+		local lineCD = "[C] " .. TRIVIA_CURRENT_OPTIONS["c"] .. "   [D] " .. TRIVIA_CURRENT_OPTIONS["d"];
+		local singleLine = lineAB .. "   " .. lineCD;
+		if (string.len(singleLine) <= 225) then
 			Trivia_SendMessage(singleLine);
 		else
 			Trivia_SendMessage(lineAB);
 			Trivia_SendMessage(lineCD);
 		end
 	end
-
-	TRIVIA_QUESTION_STARTTIME = GetTime();
-	TRIVIA_ACCEPTING_ANSWERS = true;
-	Trivia_UnSchedule("all");
-	Trivia_Schedule("QUESTION_TIMEOUT", TRIVIA_QUESTION_TIMEOUT);
-	Trivia_Schedule("QUESTION_WARN", TRIVIA_QUESTION_TIMEWARN);
 end
 
 function Trivia_QuestionTimeout()
 	TRIVIA_ACCEPTING_ANSWERS = false;
+	lastTimerSecond = -1;
+	Trivia_UpdateToggleButton();
 	Trivia_SendMessage("Time is up! No correct answer was given.");
 
-	if (TRIVIA_SCORE_REPORT == 1) then
-		Trivia_Schedule("SHOW_ANSWER", 3);
-		Trivia_Schedule("REPORT_SCORERS", 7);
-		Trivia_Schedule("NEXT_QUESTION", 14);
-		TRIVIA_SCORE_REPORT = 5;
+	local interval = (TRIVIA_CONFIG and TRIVIA_CONFIG.questionInterval) or 7;
+	local reportEvery = (TRIVIA_CONFIG and TRIVIA_CONFIG.scoreReportEvery) or 5;
+
+	if (reportEvery > 0 and TRIVIA_SCORE_REPORT <= 1) then
+		Trivia_Schedule("SHOW_ANSWER", 2);
+		Trivia_Schedule("REPORT_SCORERS", 4);
+		Trivia_Schedule("NEXT_QUESTION", interval + 5);
+		TRIVIA_SCORE_REPORT = reportEvery;
 	else
-		TRIVIA_SCORE_REPORT = TRIVIA_SCORE_REPORT - 1;
-		Trivia_Schedule("SHOW_ANSWER", 3);
-		Trivia_Schedule("NEXT_QUESTION", 8);
+		if (reportEvery > 0) then
+			TRIVIA_SCORE_REPORT = TRIVIA_SCORE_REPORT - 1;
+		end
+		Trivia_Schedule("SHOW_ANSWER", 2);
+		Trivia_Schedule("NEXT_QUESTION", interval);
 	end
 end
 
 function Trivia_SkipQuestion()
 	if (TRIVIA_ENABLED) then
 		TRIVIA_ACCEPTING_ANSWERS = false;
+		lastTimerSecond = -1;
+		Trivia_UpdateToggleButton();
 		Trivia_SendMessage("Question was skipped.");
 		Trivia_UnSchedule("all");
-		Trivia_Schedule("SHOW_ANSWER", 2);
-		Trivia_Schedule("NEXT_QUESTION", 5);
+		Trivia_Schedule("SHOW_ANSWER", 1);
+		Trivia_Schedule("NEXT_QUESTION", 4);
 	end
 end
 
@@ -1103,7 +1318,9 @@ function Trivia_CheckAnswer(player, msg)
 
 	if (isCorrect) then
 		TRIVIA_ACCEPTING_ANSWERS = false;
+		lastTimerSecond = -1;
 		Trivia_UnSchedule("all");
+		Trivia_UpdateToggleButton();
 
 		local canonicalAns = TRIVIA_ANSWERS1[qIdx] or "";
 		local answerLabel = canonicalAns;
@@ -1134,13 +1351,18 @@ function Trivia_CheckAnswer(player, msg)
 		end
 		TRIVIA_SCORES[player] = score;
 
-		if (TRIVIA_SCORE_REPORT == 1) then
-			Trivia_Schedule("REPORT_SCORERS", 4);
-			Trivia_Schedule("NEXT_QUESTION", 12);
-			TRIVIA_SCORE_REPORT = 5;
+		local interval = (TRIVIA_CONFIG and TRIVIA_CONFIG.questionInterval) or 7;
+		local reportEvery = (TRIVIA_CONFIG and TRIVIA_CONFIG.scoreReportEvery) or 5;
+
+		if (reportEvery > 0 and TRIVIA_SCORE_REPORT <= 1) then
+			Trivia_Schedule("REPORT_SCORERS", 3);
+			Trivia_Schedule("NEXT_QUESTION", interval + 4);
+			TRIVIA_SCORE_REPORT = reportEvery;
 		else
-			TRIVIA_SCORE_REPORT = TRIVIA_SCORE_REPORT - 1;
-			Trivia_Schedule("NEXT_QUESTION", 7);
+			if (reportEvery > 0) then
+				TRIVIA_SCORE_REPORT = TRIVIA_SCORE_REPORT - 1;
+			end
+			Trivia_Schedule("NEXT_QUESTION", interval);
 		end
 	end
 end
@@ -1273,21 +1495,28 @@ function Trivia_ChangeChannel()
 	end
 end
 
-function Trivia_SendMessage(msg)
-	msg = "[TurtleTrivia]: " .. msg;
+function Trivia_SanitizeChatText(text)
+	if (not text) then return ""; end
+	text = tostring(text);
+	-- Pipe characters act as escape codes in WoW chat messages and throw errors if invalid
+	text = string.gsub(text, "|", "/");
+	text = string.gsub(text, "[\r\n]+", " ");
+	return text;
+end
 
+local function Trivia_DispatchSingleLine(line)
 	if (TRIVIA_CHANNEL == "GUILD") then
-		SendChatMessage(msg, "GUILD");
+		SendChatMessage(line, "GUILD");
 	elseif (TRIVIA_CHANNEL == "SAY") then
-		SendChatMessage(msg, "SAY");
+		SendChatMessage(line, "SAY");
 	elseif (TRIVIA_CHANNEL == "PARTY") then
-		SendChatMessage(msg, "PARTY");
+		SendChatMessage(line, "PARTY");
 	elseif (TRIVIA_CHANNEL == "RAID") then
-		SendChatMessage(msg, "RAID");
+		SendChatMessage(line, "RAID");
 	elseif (TRIVIA_CHANNEL ~= nil) then
 		local id = GetChannelName(TRIVIA_CHANNEL);
 		if (id > 0) then
-			SendChatMessage(msg, "CHANNEL", nil, id);
+			SendChatMessage(line, "CHANNEL", nil, id);
 		else
 			Trivia_ErrorMessage("Unable to send to channel '" .. tostring(TRIVIA_CHANNEL) .. "'.");
 			Trivia_ErrorMessage("Reset channel with '/trivia channel [SAY|PARTY|RAID|GUILD|<channel>]'");
@@ -1296,6 +1525,48 @@ function Trivia_SendMessage(msg)
 			TRIVIA_ENABLED = false;
 			TRIVIA_ACCEPTING_ANSWERS = false;
 			Trivia_UpdateToggleButton();
+			return false;
+		end
+	end
+	return true;
+end
+
+function Trivia_SendMessage(msg)
+	local prefix = "[TurtleTrivia]: ";
+	local body = Trivia_SanitizeChatText(msg);
+	local maxBodyLen = 230; -- 16 prefix + 230 body <= 246 bytes (safely under WoW's 255-byte chat cap)
+
+	if (string.len(body) <= maxBodyLen) then
+		Trivia_DispatchSingleLine(prefix .. body);
+		return;
+	end
+
+	local remaining = body;
+	while (string.len(remaining) > 0) do
+		if (string.len(remaining) <= maxBodyLen) then
+			Trivia_DispatchSingleLine(prefix .. remaining);
+			break;
+		end
+
+		local chunk = string.sub(remaining, 1, maxBodyLen);
+		local splitPos = nil;
+		local searchPos = 1;
+		while (true) do
+			local sp = string.find(chunk, " ", searchPos, true);
+			if (not sp) then break; end
+			splitPos = sp;
+			searchPos = sp + 1;
+		end
+
+		if (splitPos and splitPos > 40) then
+			chunk = string.sub(remaining, 1, splitPos - 1);
+			remaining = Trivia_Trim(string.sub(remaining, splitPos + 1));
+		else
+			remaining = Trivia_Trim(string.sub(remaining, maxBodyLen + 1));
+		end
+
+		if (not Trivia_DispatchSingleLine(prefix .. chunk)) then
+			break;
 		end
 	end
 end

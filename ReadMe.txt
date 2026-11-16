@@ -1,9 +1,14 @@
-TriviaBot-TurtleWoW v1.1
+TriviaBot-TurtleWoW v1.2
 
-TriviaBot-TurtleWoW is an interactive trivia bot for WoW 1.12 and Turtle WoW, featuring A/B/C/D multiple-choice options, flexible ("likely") answer matching, a moveable on-screen toggle button, and 3,708 questions across Turtle WoW, Warcraft I/II/III, WoW Lore Publications, Geography, and General Trivia.
+TriviaBot-TurtleWoW is an interactive trivia bot for WoW 1.12 and Turtle WoW, featuring a graphical Settings Menu, configurable question timers, A/B/C/D multiple-choice options, flexible ("likely") answer matching, a moveable on-screen toggle button with live countdown, and 4,010 pre-TBC questions across Turtle WoW, Warcraft I/II/III, WoW Lore Publications, Geography, and General Knowledge Trivia.
 
 Command List:
+/trivia | /trivia menu        - Opens the graphical Settings Menu.
 /trivia start | stop | toggle - Starts, stops, or toggles the trivia game.
+/trivia timer <10-180>        - Sets seconds allowed per question (default 45).
+/trivia warn <0-60>           - Sets warning seconds before timeout (0 = off).
+/trivia delay <3-30>          - Sets delay seconds between questions (default 7).
+/trivia report <0-20>         - Reports leaderboard every N questions (0 = off).
 /trivia lock | unlock         - Locks or unlocks the moveable on-screen Trivia button.
 /trivia disable | enable      - Hides (disables) or shows (enables) the on-screen Trivia button.
 /trivia button reset          - Resets the moveable button position to top-center.
@@ -16,9 +21,9 @@ Command List:
 /trivia score                 - Reports the current top scorers.
 /trivia help                  - In-game help display.
 
-Included Questions (3,708 total):
-- Warcraft Combined (943 questions: Turtle WoW + WoW + Warcraft I/II/III & Lore)
-- Turtle WoW (60 questions)
-- WoW & Warcraft I/II/III/Lore (883 questions)
-- Geography (133 questions)
-- Normal (2,632 questions)
+Included Questions (4,010 total):
+- Warcraft Combined (1,060 questions: Turtle WoW + <=2006 WoW & Warcraft I/II/III/Lore)
+- Turtle WoW (100 questions)
+- WoW & Warcraft I/II/III/Lore <=2006 (960 questions)
+- Geography (200 questions)
+- General Knowledge & Normal Trivia (2,750 questions)

@@ -13,12 +13,18 @@
 ## Features
 
 - **Moveable On-Screen Control Button (`TriviaBotToggleButton`):**
-  - **Left-Click:** Start / Stop the trivia game immediately.
-  - **Right-Click:** Skip the current question (when running) or cycle through question sets (when stopped).
+  - **Left-Click:** Start / Stop the trivia game immediately, with a live remaining-seconds countdown (`Trivia: ON (32s)`).
+  - **Right-Click:** Open / close the graphical Settings Menu (`TriviaBotOptionsFrame`).
+  - **Shift + Right-Click:** Skip the current question (when running) or cycle through question sets (when stopped).
   - **Drag:** Move anywhere on screen (position is saved across sessions in `TRIVIA_CONFIG`).
   - **Lock & Hide Controls:** Lock position with `/trivia lock` or hide/disable the button completely with `/trivia disable` (`/trivia enable` to restore).
+- **Graphical Settings Menu (`/trivia` or `/trivia menu`):**
+  - One-click **Question Set** selector with live question counts.
+  - One-click **Chat Channel** preset buttons (`SAY`, `PARTY`, `RAID`, `GUILD`) + custom channel box.
+  - **Per-Question Timer Sliders & Steppers:** Configure time per question (`10`–`180`s), time warning (`0`–`60`s before timeout), delay between questions (`3`–`30`s), and leaderboard frequency (`0`–`20`).
+  - Toggles for A/B/C/D options, button countdown, button lock/hide, UnitXP SP3 taskbar flash, plus `Start/Stop`, `Skip`, `Shuffle`, `Scores`, and `Clear` buttons.
 - **Multiple Choice (A, B, C, D) & Flexible Answering:**
-  - Every question displays 4 shuffled options (`A`, `B`, `C`, `D`).
+  - Every question displays 4 shuffled options (`[A] ...   [B] ...   [C] ...   [D] ...`).
   - Players can answer by typing the choice letter (`A`, `B`, `C`, `D`, `a)`, `option a`, etc.) OR by typing the answer text.
   - Built-in anti-spam protection prevents players from rapid-guessing all 4 letters at once (3-second per-player letter cooldown on a wrong letter guess).
 - **Fuzzy / "Likely" Answer Matching:**
@@ -36,8 +42,11 @@
 
 ## What Was Added / Improved
 
-- **Added:** Moveable on-screen toggle button (`TriviaBotToggleButton`) with status colors, rich tooltip, saved screen position, `/trivia lock` (`/trivia unlock`), `/trivia disable` (`/trivia enable`), and `/trivia button reset`.
-- **Added:** Shuffled `A) ... | B) ... | C) ... | D) ...` multiple-choice options for all 4,010 questions across all 4 question files, with `/trivia choices` toggle and category-matched distractors.
+- **Added:** Graphical Settings Menu (`TriviaBotOptions.lua`) with question set buttons, channel switcher, timer/warning/delay/report sliders, checkboxes, and action buttons (`/trivia` or `/trivia menu`).
+- **Added:** Configurable per-question timer (`10`–`180`s), configurable warning time, configurable delay between questions, and live countdown on `TriviaBotToggleButton`.
+- **Added:** Moveable on-screen toggle button (`TriviaBotToggleButton`) with status colors, live countdown timer, rich tooltip, saved screen position, `/trivia lock` (`/trivia unlock`), `/trivia disable` (`/trivia enable`), and `/trivia button reset`.
+- **Added:** Shuffled `[A] ...   [B] ...   [C] ...   [D] ...` multiple-choice options for all 4,010 questions across all 4 question files, with `/trivia choices` toggle and category-matched distractors.
+- **Fixed:** Fixed `Invalid escape code in chat message` crash when sending A/B/C/D options (caused by `|` pipe separators in `SendChatMessage`) and added `|` sanitization + automatic word-boundary splitting for long messages (> 230 chars).
 - **Added:** Smart fuzzy ("likely") answer matcher supporting punctuation/article stripping, number-word conversion, core keyword extraction, and Levenshtein typo tolerance.
 - **Added:** Expanded `TurtleQuestions.lua` (100 questions), `WoWQuestions.lua` (960 strictly pre-2007 Vanilla/Warcraft I–III/Novel questions), `GeographyQuestions.lua` (200 questions including basic world geography), and `NormalQuestions.lua` (2,750 questions including basic general-knowledge & common-sense trivia).
 - **Fixed:** Audited and removed all TBC / WotLK / post-2006 questions, phrasing, and multiple-choice distractors from `WoWQuestions.lua` and `TurtleQuestions.lua`.
@@ -51,7 +60,12 @@
 
 ## Usage
 
+- `/trivia` | `/trivia menu` | `/trivia config` — Open the graphical Settings Menu.
 - `/trivia start` | `/trivia stop` | `/trivia toggle` — Start, stop, or toggle the trivia bot.
+- `/trivia timer <10-180>` — Set seconds allowed per question (default `45`).
+- `/trivia warn <0-60>` — Set warning seconds before timeout (`0` disables warning).
+- `/trivia delay <3-30>` — Set delay seconds between questions (default `7`).
+- `/trivia report <0-20>` — Set leaderboard report interval (`0` disables).
 - `/trivia lock` | `/trivia unlock` — Lock or unlock the moveable on-screen button.
 - `/trivia disable` | `/trivia enable` — Disable (hide) or enable (show) the on-screen button.
 - `/trivia button reset` — Reset the moveable button to top-center of the screen.
