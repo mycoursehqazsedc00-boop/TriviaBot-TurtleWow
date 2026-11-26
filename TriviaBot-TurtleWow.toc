@@ -1,0 +1,12 @@
+## Interface: 11200
+## Title: TriviaBot-TurtleWoW
+## Version: 1.4
+## Notes: Lightweight single-folder trivia bot with 1,299 unified Turtle WoW & pre-TBC Warcraft (<= Dec 2006) questions covering lore, geography, mechanics, stats, and iconic items.
+## Author: LizardBerry
+## X-Credits: Roadblock (Nostalrius), Guri (Trollbane), Psy (Frostwolf)
+## SavedVariables: TRIVIA_QLIST, TRIVIA_CHANNEL, TRIVIA_CONFIG
+
+TriviaBot-TurtleWow.lua
+WarcraftQuestions.lua
+TriviaBotOptions.lua
+TriviaBot-TurtleWow.xml
